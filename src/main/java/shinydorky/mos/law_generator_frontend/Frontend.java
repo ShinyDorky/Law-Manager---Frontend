@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.springframework.context.annotation.Bean;
 import shinydorky.mos.law_generator_frontend.controller.MainSceneController;
 
 public class Frontend extends Application {
@@ -16,6 +17,7 @@ public class Frontend extends Application {
     public void init() {
         System.out.println("init: " + Thread.currentThread().getName());
     }
+
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -29,12 +31,16 @@ public class Frontend extends Application {
         // scene, stage
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
-        primaryStage.setTitle("PhraseSniper by Grzegorz 'ShinyDorky' Paździor");
+        primaryStage.setTitle("MOS Law Manager by ShinyDorky");
         primaryStage.show();
         primaryStage.setFullScreen(false);
-        primaryStage.setResizable(false);
+//        primaryStage.setResizable(false);
         primaryStage.setMinHeight(800);
         primaryStage.setMinWidth(1200);
+
+        controller.initialize(primaryStage);
+
+
 
         System.out.println("start end: " + Thread.currentThread().getName());
     }
