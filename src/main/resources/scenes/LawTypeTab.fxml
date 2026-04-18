@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="100.0" prefWidth="300.0" style="-fx-background-color: BLUE;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="shinydorky.mos.law_generator_frontend.controller.LawTypeTabController">
+   <children>
+      <ProgressBar prefWidth="200.0" progress="0.0" />
+   </children>
+</AnchorPane>
