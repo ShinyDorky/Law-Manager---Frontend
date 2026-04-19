@@ -11,15 +11,19 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import shinydorky.mos.law_generator_frontend.model.BasicLawFile;
 import shinydorky.mos.law_generator_frontend.model.LawGroup;
 import shinydorky.mos.law_generator_frontend.model.LawOption;
 import shinydorky.mos.law_generator_frontend.model.LawType;
+import shinydorky.mos.law_generator_frontend.rest.RESTConnector;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 @Component
+@RequiredArgsConstructor
 public class MainSceneController {
     private Stage mainStage;
 
@@ -36,10 +40,7 @@ public class MainSceneController {
 
     public void initialize(Stage mainStage){
         this.mainStage = mainStage;
-        treeView.setMinWidth(mainStage.getWidth()/5);
-        treeView.setMaxWidth(mainStage.getWidth()/5);
-        displayPane1.setMinWidth(mainStage.getWidth() - mainStage.getWidth()/5 - 40);
-        displayPane1.setMaxWidth(mainStage.getWidth() - mainStage.getWidth()/5 - 40);
+        resize();
 
         ChangeListener<Number> stageSizeListener = (observable, oldValue, newValue) -> {
             resize();
@@ -72,8 +73,14 @@ public class MainSceneController {
         TreeItem<BasicLawFile> lawType1 = new TreeItem<>(lawType);
 //        TreeItem<String> root = new TreeItem<>("ROOT");
         treeView.setShowRoot(false);
+        treeView.getSelectionModel().clearSelection();
         treeView.setRoot(root);
 
+        ArrayList<LawType> types = RESTConnector.getAllTypes();
+        for(LawType type: types){
+            TreeItem<BasicLawFile> lawTypeItem = new TreeItem<>(type);
+            root.getChildren().add(lawTypeItem);
+        }
         LawGroup lawGroup1 = LawGroup.builder()
                 .id(1l)
                 .name("Recruitment Laws")

@@ -8,6 +8,8 @@ import lombok.experimental.SuperBuilder;
 
 @SuperBuilder
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class BasicLawFile {
     protected Long id;
     protected String signature;

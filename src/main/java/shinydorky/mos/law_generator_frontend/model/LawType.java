@@ -5,5 +5,8 @@ import lombok.experimental.SuperBuilder;
 
 
 @SuperBuilder
+@AllArgsConstructor
+@NoArgsConstructor
 public class LawType extends BasicLawFile{
+    private int test;
 }
