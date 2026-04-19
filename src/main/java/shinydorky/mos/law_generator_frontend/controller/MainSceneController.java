@@ -33,6 +33,10 @@ public class MainSceneController {
     private TreeView<LawType> treeView;
 
     @FXML
+    private ScrollPane scrollPane;
+    @FXML
+    private AnchorPane scrollPaneContent;
+    @FXML
     private VBox itemDisplayBox;
 
     @FXML
@@ -72,6 +76,12 @@ public class MainSceneController {
         ChangeListener<Number> stageSizeListener = (observable, oldValue, newValue) -> {
             resize();
         };
+        ChangeListener<Boolean> stageFullscreenListener = (observable, oldValue, newValue) -> {
+            if (mainStage.maximizedProperty().get()){
+                System.out.println("AAAAA");
+            }
+            resize();
+        };
 
         treeView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue == null){
@@ -82,12 +92,29 @@ public class MainSceneController {
             }
         });
 
+        scrollPane.widthProperty().addListener(stageSizeListener);
+        scrollPane.heightProperty().addListener(stageSizeListener);
+//        mainStage.maximizedProperty().addListener(stageFullscreenListener);
+//        mainStage.fullScreenProperty().addListener(stageFullscreenListener);
         mainStage.widthProperty().addListener(stageSizeListener);
+        mainStage.heightProperty().addListener(stageSizeListener);
         SetupTreeView();
 
     }
 
     private void resize(){
+        itemDisplayBox.setMinWidth(scrollPane.getWidth() - 5);
+        itemDisplayBox.setMaxWidth(scrollPane.getWidth() - 5);
+        itemDisplayBox.setMinHeight(scrollPane.getHeight() - 5);
+        itemDisplayBox.setMaxHeight(scrollPane.getHeight() - 5);
+        if (scrollPane.getHeight() >= 620){
+        scrollPaneContent.setMinHeight(scrollPane.getHeight() - 5);
+        scrollPaneContent.setMaxHeight(scrollPane.getHeight() - 5);
+        }
+//        scrollPaneContent.setMinWidth(scrollPane.getWidth() - 5);
+//        scrollPaneContent.setMaxWidth(scrollPane.getWidth() - 5);
+//        scrollPaneContent.setMinHeight(scrollPane.getHeight() - 5);
+//        scrollPaneContent.setMaxHeight(scrollPane.getHeight() - 5);
 //        treeView.setMinWidth(mainStage.getWidth()/5);
 //        treeView.setMaxWidth(mainStage.getWidth()/5);
 //        addLawTypeButton.setMinWidth(mainStage.getWidth()/5);
@@ -163,5 +190,6 @@ public class MainSceneController {
     @FXML
     public void Deselect(){
         treeView.getSelectionModel().clearSelection();
+        resize();
     }
 }
