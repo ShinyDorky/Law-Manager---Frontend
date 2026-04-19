@@ -1,5 +1,6 @@
 package shinydorky.mos.law_generator_frontend.rest;
 
+import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestTemplate;
 import shinydorky.mos.law_generator_frontend.model.LawGroup;
@@ -8,12 +9,13 @@ import shinydorky.mos.law_generator_frontend.model.LawType;
 import tools.jackson.databind.JsonNode;
 import tools.jackson.databind.ObjectMapper;
 
+import java.net.ConnectException;
 import java.util.ArrayList;
 
 public class RESTConnector {
     private final static String address = "http://localhost:8080/api";
 
-    public static ArrayList<LawType> getAllTypes(){
+    public static ArrayList<LawType> getAllTypes() throws ResourceAccessException {
         RestTemplate restTemplate = new RestTemplate();
 
         ArrayList<LawType> result = new ArrayList<>();
@@ -26,7 +28,7 @@ public class RESTConnector {
         return result;
     }
 
-    public static ArrayList<LawGroup> getGroupsInType(long typeId){
+    public static ArrayList<LawGroup> getGroupsInType(long typeId) throws ResourceAccessException {
         RestTemplate restTemplate = new RestTemplate();
 
         ArrayList<LawGroup> result = new ArrayList<>();
@@ -39,7 +41,7 @@ public class RESTConnector {
         return result;
     }
 
-    public static ArrayList<LawOption> getOptionsInGroup(long groupId){
+    public static ArrayList<LawOption> getOptionsInGroup(long groupId) throws ResourceAccessException {
         RestTemplate restTemplate = new RestTemplate();
 
         ArrayList<LawOption> result = new ArrayList<>();
