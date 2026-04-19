@@ -1,8 +1,12 @@
 package shinydorky.mos.law_generator_frontend.model;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 @SuperBuilder
+@AllArgsConstructor
+@NoArgsConstructor
 public class LawOption extends BasicLawFile{
     private String desc;
     private String canKeep;
