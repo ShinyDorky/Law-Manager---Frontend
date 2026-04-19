@@ -11,7 +11,7 @@ import java.util.Set;
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-public class LawGroup extends BasicLawFile{
+public class LawGroup extends LawType{
     protected String desc;
     protected Long lawTypeId;
 }

@@ -14,7 +14,6 @@ import javafx.stage.Stage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.ResourceAccessException;
-import shinydorky.mos.law_generator_frontend.model.BasicLawFile;
 import shinydorky.mos.law_generator_frontend.model.LawGroup;
 import shinydorky.mos.law_generator_frontend.model.LawOption;
 import shinydorky.mos.law_generator_frontend.model.LawType;
@@ -31,7 +30,7 @@ public class MainSceneController {
     private Stage mainStage;
 
     @FXML
-    private TreeView<BasicLawFile> treeView;
+    private TreeView<LawType> treeView;
 
     @FXML
     private AnchorPane displayPane1;
@@ -52,6 +51,9 @@ public class MainSceneController {
         treeView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             typeNameText.setText(newValue.getValue().getName());
             typeSignatureText.setText(newValue.getValue().getSignature());
+            if (newValue.getValue().getClass() == LawGroup.class){
+                System.out.println("KLASA");
+            }
         });
 
         mainStage.widthProperty().addListener(stageSizeListener);
@@ -68,12 +70,12 @@ public class MainSceneController {
     }
 
     private void SetupTreeView(){
-        TreeItem<BasicLawFile> root = new TreeItem<>();
+        TreeItem<LawType> root = new TreeItem<>();
         LawType lawType = LawType.builder()
                 .id(1l)
                 .signature("military")
                 .name("Military").build();
-        TreeItem<BasicLawFile> lawType1 = new TreeItem<>(lawType);
+        TreeItem<LawType> lawType1 = new TreeItem<>(lawType);
 //        TreeItem<String> root = new TreeItem<>("ROOT");
         treeView.setShowRoot(false);
         treeView.getSelectionModel().clearSelection();
@@ -82,17 +84,17 @@ public class MainSceneController {
 
             ArrayList<LawType> types = RESTConnector.getAllTypes();
             for(LawType type: types){
-                TreeItem<BasicLawFile> lawTypeItem = new TreeItem<>(type);
+                TreeItem<LawType> lawTypeItem = new TreeItem<>(type);
                 root.getChildren().add(lawTypeItem);
 
                 ArrayList<LawGroup> groups = RESTConnector.getGroupsInType(type.getId());
                 for(LawGroup group: groups){
-                    TreeItem<BasicLawFile> lawGroupItem = new TreeItem<>(group);
+                    TreeItem<LawType> lawGroupItem = new TreeItem<>(group);
                     lawTypeItem.getChildren().add(lawGroupItem);
 
                     ArrayList<LawOption> options = RESTConnector.getOptionsInGroup(group.getId());
                     for(LawOption option: options){
-                        TreeItem<BasicLawFile> lawOptionItem = new TreeItem<>(option);
+                        TreeItem<LawType> lawOptionItem = new TreeItem<>(option);
                         lawGroupItem.getChildren().add(lawOptionItem);
                     }
                 }
@@ -100,5 +102,14 @@ public class MainSceneController {
         } catch (ResourceAccessException e){
             System.out.println("ERROR CONNECTING");
         }
+    }
+
+    private void DisplayChosenItem(LawType selectedItem){
+        typeNameText.setText(selectedItem.getName());
+        typeSignatureText.setText(selectedItem.getSignature());
+        if (selectedItem.getClass() == LawGroup.class){
+            System.out.println("KLASA");
+        }
+
     }
 }

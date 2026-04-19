@@ -5,8 +5,16 @@ import lombok.experimental.SuperBuilder;
 
 
 @SuperBuilder
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class LawType extends BasicLawFile{
-    private int test;
+public class LawType{
+    protected Long id;
+    protected String signature;
+    protected String name;
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

@@ -7,7 +7,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-public class LawOption extends BasicLawFile{
+public class LawOption extends LawType{
     private String desc;
     private String canKeep;
     private String canPass;
