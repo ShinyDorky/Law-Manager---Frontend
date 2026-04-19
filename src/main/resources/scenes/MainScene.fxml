@@ -119,8 +119,8 @@
                         </ScrollPane>
                         <HBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="200.0" spacing="10.0" VBox.vgrow="NEVER">
                            <children>
-                              <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="185.0" text="Delete" HBox.hgrow="ALWAYS" />
-                              <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="185.0" text="Save" HBox.hgrow="ALWAYS" />
+                              <Button mnemonicParsing="false" onAction="#DeleteItem" prefHeight="45.0" prefWidth="185.0" text="Delete" HBox.hgrow="ALWAYS" />
+                              <Button mnemonicParsing="false" onAction="#SaveItem" prefHeight="45.0" prefWidth="185.0" text="Save" HBox.hgrow="ALWAYS" />
                            </children>
                         </HBox>
                      </children>

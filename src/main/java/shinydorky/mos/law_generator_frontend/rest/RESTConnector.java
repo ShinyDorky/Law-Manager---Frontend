@@ -1,7 +1,6 @@
 package shinydorky.mos.law_generator_frontend.rest;
 
 import org.springframework.web.client.ResourceAccessException;
-import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestTemplate;
 import shinydorky.mos.law_generator_frontend.model.LawGroup;
 import shinydorky.mos.law_generator_frontend.model.LawOption;
@@ -9,13 +8,12 @@ import shinydorky.mos.law_generator_frontend.model.LawType;
 import tools.jackson.databind.JsonNode;
 import tools.jackson.databind.ObjectMapper;
 
-import java.net.ConnectException;
 import java.util.ArrayList;
 
 public class RESTConnector {
     private final static String address = "http://localhost:8080/api";
 
-    public static ArrayList<LawType> getAllTypes() throws ResourceAccessException {
+    public static ArrayList<LawType> GetAllTypes() throws ResourceAccessException {
         RestTemplate restTemplate = new RestTemplate();
 
         ArrayList<LawType> result = new ArrayList<>();
@@ -28,7 +26,7 @@ public class RESTConnector {
         return result;
     }
 
-    public static ArrayList<LawGroup> getGroupsInType(long typeId) throws ResourceAccessException {
+    public static ArrayList<LawGroup> GetGroupsInType(long typeId) throws ResourceAccessException {
         RestTemplate restTemplate = new RestTemplate();
 
         ArrayList<LawGroup> result = new ArrayList<>();
@@ -41,7 +39,7 @@ public class RESTConnector {
         return result;
     }
 
-    public static ArrayList<LawOption> getOptionsInGroup(long groupId) throws ResourceAccessException {
+    public static ArrayList<LawOption> GetOptionsInGroup(long groupId) throws ResourceAccessException {
         RestTemplate restTemplate = new RestTemplate();
 
         ArrayList<LawOption> result = new ArrayList<>();
@@ -52,5 +50,15 @@ public class RESTConnector {
             result.add(lawGroup);
         });
         return result;
+    }
+
+    public static void createNewLawType(LawType lawType){
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.postForObject(address + "/lawType", lawType, JsonNode.class);
+    }
+
+    public static void DeleteLawType(Long id){
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.delete(address + "/lawType/" + id, JsonNode.class);
     }
 }

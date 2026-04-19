@@ -2,9 +2,6 @@ package shinydorky.mos.law_generator_frontend.controller;
 
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
-import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
@@ -19,9 +16,6 @@ import shinydorky.mos.law_generator_frontend.model.LawOption;
 import shinydorky.mos.law_generator_frontend.model.LawType;
 import shinydorky.mos.law_generator_frontend.rest.RESTConnector;
 
-import java.io.IOError;
-import java.io.IOException;
-import java.net.ConnectException;
 import java.util.ArrayList;
 
 @Component
@@ -85,9 +79,12 @@ public class MainSceneController {
 
         treeView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue == null){
-                itemDisplayBox.setVisible(false);
+
+                descriptionArea.setVisible(false);
+                optionAttributes1.setVisible(false);
+                optionAttributes2.setVisible(false);
+                ClearFields();
             } else {
-                itemDisplayBox.setVisible(true);
                 DisplayChosenItem(newValue.getValue());
             }
         });
@@ -132,17 +129,17 @@ public class MainSceneController {
         treeView.setRoot(root);
         try {
 
-            ArrayList<LawType> types = RESTConnector.getAllTypes();
+            ArrayList<LawType> types = RESTConnector.GetAllTypes();
             for(LawType type: types){
                 TreeItem<LawType> lawTypeItem = new TreeItem<>(type);
                 root.getChildren().add(lawTypeItem);
 
-                ArrayList<LawGroup> groups = RESTConnector.getGroupsInType(type.getId());
+                ArrayList<LawGroup> groups = RESTConnector.GetGroupsInType(type.getId());
                 for(LawGroup group: groups){
                     TreeItem<LawType> lawGroupItem = new TreeItem<>(group);
                     lawTypeItem.getChildren().add(lawGroupItem);
 
-                    ArrayList<LawOption> options = RESTConnector.getOptionsInGroup(group.getId());
+                    ArrayList<LawOption> options = RESTConnector.GetOptionsInGroup(group.getId());
                     for(LawOption option: options){
                         TreeItem<LawType> lawOptionItem = new TreeItem<>(option);
                         lawGroupItem.getChildren().add(lawOptionItem);
@@ -190,6 +187,42 @@ public class MainSceneController {
     @FXML
     public void Deselect(){
         treeView.getSelectionModel().clearSelection();
-        resize();
+        SetupCreation();
+    }
+
+    public void SetupCreation(){
+        if (treeView.getSelectionModel().getSelectedIndex() == -1){
+            descriptionArea.setVisible(false);
+            optionAttributes1.setVisible(false);
+            optionAttributes2.setVisible(false);
+            ClearFields();
+        }
+    }
+
+    @FXML
+    public void SaveItem(){
+        RESTConnector.createNewLawType(LawType.builder().name(nameText.getText()).signature(signatureText.getText()).build());
+        SetupTreeView();
+        treeView.getSelectionModel().clearSelection();
+        ClearFields();
+    }
+    @FXML
+    public void DeleteItem(){
+        RESTConnector.DeleteLawType(treeView.getSelectionModel().getSelectedItem().getValue().getId());
+        SetupTreeView();
+        treeView.getSelectionModel().clearSelection();
+        ClearFields();
+    }
+
+    private void ClearFields(){
+        nameText.setText("");
+        signatureText.setText("");
+        descriptionText.setText("");
+        statePowerOpinion.setText("");
+        militaryOpinion.setText("");
+        religiousUnityOpinion.setText("");
+        culturalToleranceOpinion.setText("");
+        populismOpinion.setText("");
+        effectsText.setText("");
     }
 }
