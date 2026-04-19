@@ -80,6 +80,12 @@ public class MainSceneController {
         for(LawType type: types){
             TreeItem<BasicLawFile> lawTypeItem = new TreeItem<>(type);
             root.getChildren().add(lawTypeItem);
+
+            ArrayList<LawGroup> groups = RESTConnector.getGroupsInType(type.getId());
+            for(LawGroup group: groups){
+                TreeItem<BasicLawFile> lawGroupItem = new TreeItem<>(group);
+                lawTypeItem.getChildren().add(lawGroupItem);
+            }
         }
         LawGroup lawGroup1 = LawGroup.builder()
                 .id(1l)

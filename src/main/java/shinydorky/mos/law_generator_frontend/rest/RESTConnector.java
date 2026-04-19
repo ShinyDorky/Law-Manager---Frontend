@@ -2,6 +2,7 @@ package shinydorky.mos.law_generator_frontend.rest;
 
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestTemplate;
+import shinydorky.mos.law_generator_frontend.model.LawGroup;
 import shinydorky.mos.law_generator_frontend.model.LawType;
 import tools.jackson.databind.JsonNode;
 import tools.jackson.databind.ObjectMapper;
@@ -17,11 +18,22 @@ public class RESTConnector {
         ArrayList<LawType> result = new ArrayList<>();
         ObjectMapper mapper = new ObjectMapper();
         JsonNode data = restTemplate.getForObject(address + "/lawType", JsonNode.class);
-        ArrayList<String> types = new ArrayList<>();
         data.forEach(type -> {
-            types.add(type.toString());
             LawType lawType = mapper.readValue(type.toString(), LawType.class);
             result.add(lawType);
+        });
+        return result;
+    }
+
+    public static ArrayList<LawGroup> getGroupsInType(long typeId){
+        RestTemplate restTemplate = new RestTemplate();
+
+        ArrayList<LawGroup> result = new ArrayList<>();
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode data = restTemplate.getForObject(address + "/lawType/"+ typeId + "/lawGroups", JsonNode.class);
+        data.forEach(type -> {
+            LawGroup lawGroup = mapper.readValue(type.toString(), LawGroup.class);
+            result.add(lawGroup);
         });
         return result;
     }
