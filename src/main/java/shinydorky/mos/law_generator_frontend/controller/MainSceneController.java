@@ -79,13 +79,14 @@ public class MainSceneController {
     }
 
     private void SetupTreeView(){
+        TreeItem<BasicLawFile> root = new TreeItem<>();
         LawType lawType = LawType.builder()
                 .id(1l)
                 .signature("military")
                 .name("Military").build();
-        TreeItem<BasicLawFile> root = new TreeItem<>(lawType);
+        TreeItem<BasicLawFile> lawType1 = new TreeItem<>(lawType);
 //        TreeItem<String> root = new TreeItem<>("ROOT");
-        treeView.setShowRoot(true);
+        treeView.setShowRoot(false);
         treeView.setRoot(root);
 
         LawGroup lawGroup1 = LawGroup.builder()
@@ -148,6 +149,7 @@ public class MainSceneController {
 
         b1.getChildren().addAll(l1, l2);
         b2.getChildren().addAll(l3, l4);
-        root.getChildren().addAll(b1, b2);
+        lawType1.getChildren().addAll(b1, b2);
+        root.getChildren().addAll(lawType1);
     }
 }
