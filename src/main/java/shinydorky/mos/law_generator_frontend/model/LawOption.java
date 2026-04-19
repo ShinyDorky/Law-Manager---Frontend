@@ -1,17 +1,19 @@
 package shinydorky.mos.law_generator_frontend.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 @SuperBuilder
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class LawOption extends LawType{
-    private String desc;
+    private String desc;//
     private String canKeep;
     private String canPass;
-    private String effects;
+    private String effects;//
     private Integer placeInOrder;
     private String passCost;
     private String onPass;
@@ -25,4 +27,8 @@ public class LawOption extends LawType{
     private Integer populismOpinion;
 
     private Long lawGroupId;
+    @Override
+    public String toString() {
+        return name;
+    }
 }

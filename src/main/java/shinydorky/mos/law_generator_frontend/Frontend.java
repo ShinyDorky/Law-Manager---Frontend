@@ -35,8 +35,8 @@ public class Frontend extends Application {
         primaryStage.show();
         primaryStage.setFullScreen(false);
 //        primaryStage.setResizable(false);
-        primaryStage.setMinHeight(800);
-        primaryStage.setMinWidth(1200);
+        primaryStage.setMinHeight(600);
+        primaryStage.setMinWidth(900);
 
         controller.initialize(primaryStage);
 
