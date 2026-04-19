@@ -6,8 +6,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
-import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -17,7 +17,6 @@ import shinydorky.mos.law_generator_frontend.model.LawGroup;
 import shinydorky.mos.law_generator_frontend.model.LawOption;
 import shinydorky.mos.law_generator_frontend.model.LawType;
 
-import java.awt.*;
 import java.io.IOException;
 
 @Component
@@ -25,57 +24,43 @@ public class MainSceneController {
     private Stage mainStage;
 
     @FXML
-    private TabPane tabPane;
+    private TreeView<BasicLawFile> treeView;
 
     @FXML
-    private TreeView treeView;
+    private AnchorPane displayPane1;
+
+    @FXML
+    private TextField typeNameText;
+    @FXML
+    private TextField typeSignatureText;
 
     public void initialize(Stage mainStage){
         this.mainStage = mainStage;
-        tabPane.setMinWidth(mainStage.getWidth()/5);
-        tabPane.setMaxWidth(mainStage.getWidth()/5);
         treeView.setMinWidth(mainStage.getWidth()/5);
         treeView.setMaxWidth(mainStage.getWidth()/5);
+        displayPane1.setMinWidth(mainStage.getWidth() - mainStage.getWidth()/5 - 40);
+        displayPane1.setMaxWidth(mainStage.getWidth() - mainStage.getWidth()/5 - 40);
 
         ChangeListener<Number> stageSizeListener = (observable, oldValue, newValue) -> {
-            tabPane.setMinWidth(mainStage.getWidth()/5);
-            tabPane.setMaxWidth(mainStage.getWidth()/5);
-            treeView.setMinWidth(mainStage.getWidth()/5);
-            treeView.setMaxWidth(mainStage.getWidth()/5);
-//            System.out.println("Height: " + mainStage.getHeight() + " Width: " + mainStage.getWidth());
+            resize();
         };
 
+        treeView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            typeNameText.setText(newValue.getValue().getName());
+            typeSignatureText.setText(newValue.getValue().getSignature());
+        });
+
         mainStage.widthProperty().addListener(stageSizeListener);
-
-        AddTabPane("TEST");
-        AddTabPane("TEST");
-        AddTabPane("TEST");
-        AddTabPane("TEST");
-
         SetupTreeView();
 
     }
 
-    private void AddTabPane(String name){
-        Tab newTab = new Tab(name);
-
-        ScrollPane scrollPane = new ScrollPane();
-
-        VBox vBox = new VBox();
-        vBox.setSpacing(20);
-        vBox.setPadding(new Insets(0, 5, 0, 5));
-        for (int i = 0; i < 20; i++){
-            try{
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/scenes/LawTypeTab.fxml"));
-                Parent container = loader.load();
-                vBox.getChildren().add(container);
-            } catch (IOException e){
-                e.printStackTrace();
-            }
-        }
-        scrollPane.setContent(vBox);
-        newTab.setContent(scrollPane);
-        tabPane.getTabs().add(tabPane.getTabs().size(), newTab);
+    private void resize(){
+        treeView.setMinWidth(mainStage.getWidth()/5);
+        treeView.setMaxWidth(mainStage.getWidth()/5);
+        displayPane1.setMinWidth(mainStage.getWidth() - mainStage.getWidth()/5 - 40);
+        displayPane1.setMaxWidth(mainStage.getWidth() - mainStage.getWidth()/5 - 40);
+//        System.out.println("Height: " + mainStage.getHeight() + " Width: " + mainStage.getWidth());
     }
 
     private void SetupTreeView(){
