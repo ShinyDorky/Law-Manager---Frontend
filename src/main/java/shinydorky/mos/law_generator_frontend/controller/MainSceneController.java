@@ -33,12 +33,20 @@ public class MainSceneController {
     private TreeView<LawType> treeView;
 
     @FXML
-    private AnchorPane displayPane1;
+    private AnchorPane displayPaneType;
+    @FXML
+    private AnchorPane displayPaneGroup;
 
     @FXML
     private TextField typeNameText;
     @FXML
     private TextField typeSignatureText;
+    @FXML
+    private TextField groupNameText;
+    @FXML
+    private TextField groupSignatureText;
+    @FXML
+    private TextArea groupDescriptionText;
 
     public void initialize(Stage mainStage){
         this.mainStage = mainStage;
@@ -49,11 +57,7 @@ public class MainSceneController {
         };
 
         treeView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            typeNameText.setText(newValue.getValue().getName());
-            typeSignatureText.setText(newValue.getValue().getSignature());
-            if (newValue.getValue().getClass() == LawGroup.class){
-                System.out.println("KLASA");
-            }
+            DisplayChosenItem(newValue.getValue());
         });
 
         mainStage.widthProperty().addListener(stageSizeListener);
@@ -64,9 +68,10 @@ public class MainSceneController {
     private void resize(){
         treeView.setMinWidth(mainStage.getWidth()/5);
         treeView.setMaxWidth(mainStage.getWidth()/5);
-        displayPane1.setMinWidth(mainStage.getWidth() - mainStage.getWidth()/5 - 40);
-        displayPane1.setMaxWidth(mainStage.getWidth() - mainStage.getWidth()/5 - 40);
-//        System.out.println("Height: " + mainStage.getHeight() + " Width: " + mainStage.getWidth());
+        displayPaneType.setMinWidth(mainStage.getWidth() - mainStage.getWidth()/5 - 40);
+        displayPaneType.setMaxWidth(mainStage.getWidth() - mainStage.getWidth()/5 - 40);
+        displayPaneGroup.setMinWidth(mainStage.getWidth() - mainStage.getWidth()/5 - 40);
+        displayPaneGroup.setMaxWidth(mainStage.getWidth() - mainStage.getWidth()/5 - 40);
     }
 
     private void SetupTreeView(){
@@ -105,10 +110,19 @@ public class MainSceneController {
     }
 
     private void DisplayChosenItem(LawType selectedItem){
-        typeNameText.setText(selectedItem.getName());
-        typeSignatureText.setText(selectedItem.getSignature());
-        if (selectedItem.getClass() == LawGroup.class){
-            System.out.println("KLASA");
+        if (selectedItem.getClass() == LawType.class){
+            displayPaneType.setVisible(true);
+            displayPaneGroup.setVisible(false);
+
+            typeNameText.setText(selectedItem.getName());
+            typeSignatureText.setText(selectedItem.getSignature());
+        } else if (selectedItem.getClass() == LawGroup.class){
+            displayPaneType.setVisible(false);
+            displayPaneGroup.setVisible(true);
+
+            groupNameText.setText(selectedItem.getName());
+            groupSignatureText.setText(selectedItem.getSignature());
+            groupDescriptionText.setText(((LawGroup)selectedItem).getDesc());
         }
 
     }
