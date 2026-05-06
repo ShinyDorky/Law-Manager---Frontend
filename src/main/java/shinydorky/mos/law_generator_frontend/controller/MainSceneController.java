@@ -12,6 +12,9 @@ import javafx.stage.Stage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.ResourceAccessException;
+import shinydorky.mos.law_generator_frontend.dto.LawGroupDto;
+import shinydorky.mos.law_generator_frontend.dto.LawOptionDto;
+import shinydorky.mos.law_generator_frontend.dto.LawTypeDto;
 import shinydorky.mos.law_generator_frontend.model.LawGroup;
 import shinydorky.mos.law_generator_frontend.model.LawOption;
 import shinydorky.mos.law_generator_frontend.model.LawType;
@@ -166,13 +169,13 @@ public class MainSceneController {
                 TreeItem<LawType> lawTypeItem = new TreeItem<>(type);
                 root.getChildren().add(lawTypeItem);
 
-                ArrayList<LawGroup> groups = RESTConnector.GetGroupsInType(type.getId());
+                ArrayList<LawGroup> groups = RESTConnector.GetGroupsInType(type);
                 for(LawGroup group: groups){
                     group.setItemDepth(1);
                     TreeItem<LawType> lawGroupItem = new TreeItem<>(group);
                     lawTypeItem.getChildren().add(lawGroupItem);
 
-                    ArrayList<LawOption> options = RESTConnector.GetOptionsInGroup(group.getId());
+                    ArrayList<LawOption> options = RESTConnector.GetOptionsInGroup(group);
                     for(LawOption option: options){
                         option.setItemDepth(2);
                         TreeItem<LawType> lawOptionItem = new TreeItem<>(option);
@@ -270,7 +273,7 @@ public class MainSceneController {
         }
         if (treeView.getSelectionModel().getSelectedItem().getValue().getItemDepth() == 0){
             Long id = treeView.getSelectionModel().getSelectedItem().getValue().getId();
-            RESTConnector.updateLawType(LawType.builder()
+            RESTConnector.updateLawType(LawTypeDto.builder()
                     .id(id)
                     .name(nameText.getText())
                     .signature(signatureText.getText())
@@ -280,7 +283,7 @@ public class MainSceneController {
         else if (treeView.getSelectionModel().getSelectedItem().getValue().getItemDepth() == 1){
             Long id = treeView.getSelectionModel().getSelectedItem().getValue().getId();
             Long parentId = ((LawGroup)treeView.getSelectionModel().getSelectedItem().getValue()).getLawTypeId();
-            RESTConnector.updateLawGroup(LawGroup.builder()
+            RESTConnector.updateLawGroup(LawGroupDto.builder()
                     .id(id)
                     .name(nameText.getText())
                     .signature(signatureText.getText())
@@ -292,7 +295,7 @@ public class MainSceneController {
         else if (treeView.getSelectionModel().getSelectedItem().getValue().getItemDepth() == 2){
             Long id = treeView.getSelectionModel().getSelectedItem().getValue().getId();
             Long parentId = ((LawOption)treeView.getSelectionModel().getSelectedItem().getValue()).getLawGroupId();
-            RESTConnector.updateLawOption(LawOption.builder()
+            RESTConnector.updateLawOption(LawOptionDto.builder()
                     .id(id)
                     .name(nameText.getText())
                     .signature(signatureText.getText())
@@ -335,14 +338,14 @@ public class MainSceneController {
     @FXML
     public void AddNewItem(){
         if (treeView.getSelectionModel().getSelectedIndex() == -1){
-            RESTConnector.createNewLawType(LawType.builder()
+            RESTConnector.createNewLawType(LawTypeDto.builder()
                     .name(nameText.getText())
                     .signature(signatureText.getText())
                     .build()
             );
         }
         else if (treeView.getSelectionModel().getSelectedItem().getValue().getItemDepth() == 0){
-            RESTConnector.createNewLawGroup(LawGroup.builder()
+            RESTConnector.createNewLawGroup(LawGroupDto.builder()
                     .name(nameText.getText())
                     .signature(signatureText.getText())
                     .desc(descriptionText.getText())
@@ -351,7 +354,7 @@ public class MainSceneController {
             );
         }
         else if (treeView.getSelectionModel().getSelectedItem().getValue().getItemDepth() == 1){
-            RESTConnector.createNewLawOption(LawOption.builder()
+            RESTConnector.createNewLawOption(LawOptionDto.builder()
                     .name(nameText.getText())
                     .signature(signatureText.getText())
                     .desc(descriptionText.getText())

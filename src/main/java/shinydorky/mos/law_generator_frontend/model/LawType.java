@@ -3,6 +3,8 @@ package shinydorky.mos.law_generator_frontend.model;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import java.util.List;
+
 
 @SuperBuilder
 @Data
@@ -18,4 +20,6 @@ public class LawType{
     public String toString() {
         return name;
     }
+
+    private List<LawGroup> childGroups;
 }
