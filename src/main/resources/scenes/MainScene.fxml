@@ -28,7 +28,7 @@
                                  <children>
                                     <VBox fx:id="itemDisplayBox" prefHeight="733.0" prefWidth="917.0" spacing="10.0" style="-fx-background-color: red;" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <children>
-                                          <HBox prefHeight="333.0" prefWidth="907.0" style="-fx-background-color: white; -fx-border-style: solid; visibility: true;">
+                                          <HBox fx:id="itemDisplayContent" prefHeight="333.0" prefWidth="907.0" style="-fx-background-color: white; -fx-border-style: solid; visibility: true;">
                                              <children>
                                                 <VBox minHeight="-Infinity" prefHeight="721.0" prefWidth="300.0" spacing="5.0" HBox.hgrow="ALWAYS">
                                                    <children>

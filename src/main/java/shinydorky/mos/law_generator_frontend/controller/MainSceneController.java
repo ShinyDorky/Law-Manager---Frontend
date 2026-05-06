@@ -6,6 +6,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +33,8 @@ public class MainSceneController {
     private AnchorPane scrollPaneContent;
     @FXML
     private VBox itemDisplayBox;
+    @FXML
+    private HBox itemDisplayContent;
 
     @FXML
     private TextField nameText;
@@ -102,8 +105,11 @@ public class MainSceneController {
     private void resize(){
         itemDisplayBox.setMinWidth(scrollPane.getWidth() - 5);
         itemDisplayBox.setMaxWidth(scrollPane.getWidth() - 5);
-        itemDisplayBox.setMinHeight(scrollPane.getHeight() - 5);
-        itemDisplayBox.setMaxHeight(scrollPane.getHeight() - 5);
+        itemDisplayBox.setMinHeight(scrollPane.getHeight() - 10);
+        itemDisplayBox.setMaxHeight(scrollPane.getHeight() - 10);
+        itemDisplayContent.setMinHeight(scrollPane.getHeight() - 10);
+        itemDisplayContent.setMaxHeight(scrollPane.getHeight() - 10);
+
         if (scrollPane.getHeight() >= 620){
         scrollPaneContent.setMinHeight(scrollPane.getHeight() - 5);
         scrollPaneContent.setMaxHeight(scrollPane.getHeight() - 5);
