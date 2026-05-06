@@ -56,13 +56,38 @@ public class RESTConnector {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.postForObject(address + "/lawType", lawType, JsonNode.class);
     }
+    public static void createNewLawGroup(LawGroup lawGroup){
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.postForObject(address + "/lawGroup/" + lawGroup.getLawTypeId(), lawGroup, JsonNode.class);
+    }
+    public static void createNewLawOption(LawOption lawOption){
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.postForObject(address + "/lawOption/" + lawOption.getLawGroupId(), lawOption, JsonNode.class);
+    }
+
     public static void updateLawType(LawType lawType){
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.put(address + "/lawType/" + lawType.getId(), lawType, JsonNode.class);
+    }
+    public static void updateLawGroup(LawGroup lawGroup){
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.put(address + "/lawGroup/" + lawGroup.getId(), lawGroup, JsonNode.class);
+    }
+    public static void updateLawOption(LawOption lawOption){
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.put(address + "/lawOption/" + lawOption.getId(), lawOption, JsonNode.class);
     }
 
     public static void DeleteLawType(Long id){
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.delete(address + "/lawType/" + id, JsonNode.class);
+    }
+    public static void DeleteLawGroup(Long id){
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.delete(address + "/lawGroup/" + id, JsonNode.class);
+    }
+    public static void DeleteLawOption(Long id){
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.delete(address + "/lawOption/" + id, JsonNode.class);
     }
 }

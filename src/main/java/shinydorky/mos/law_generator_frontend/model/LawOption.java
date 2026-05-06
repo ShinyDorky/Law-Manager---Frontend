@@ -10,14 +10,14 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LawOption extends LawType{
-    private String desc;//
+    private String desc;
     private String canKeep;
     private String canPass;
     private String effects;//
     private Integer placeInOrder;
     private String passCost;
-    private String onPass;
-    private boolean isDefault;
+    private String onPass; // NOT IN USE CURRENTLY - FOR FUTURE IMPLEMENTATION
+//    private boolean isDefault; // NOT IN USE CURRENTLY - FOR FUTURE IMPLEMENTATION
 
 
     private Integer statePowerOpinion;

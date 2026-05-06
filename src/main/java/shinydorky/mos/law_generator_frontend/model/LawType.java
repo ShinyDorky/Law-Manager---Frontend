@@ -9,6 +9,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LawType{
+    protected int itemDepth;
     protected Long id;
     protected String signature;
     protected String name;

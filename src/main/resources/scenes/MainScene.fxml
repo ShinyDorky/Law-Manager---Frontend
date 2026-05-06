@@ -13,7 +13,8 @@
                   <VBox prefHeight="388.0" prefWidth="121.0" spacing="10.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
                      <children>
                         <TreeView fx:id="treeView" prefHeight="331.0" prefWidth="112.0" style="-fx-border-style: solid;" VBox.vgrow="ALWAYS" />
-                        <Button fx:id="addLawTypeButton" mnemonicParsing="false" onAction="#DisplayLawTypeCreation" prefHeight="45.0" prefWidth="191.0" text="Add new&#10;Law Type" />
+                        <Button fx:id="addLawTypeButton" mnemonicParsing="false" onAction="#DisplayLawTypeCreation" prefHeight="45.0" prefWidth="117.0" text="Add new&#10;Law Type" />
+                        <Button fx:id="refreshButton" layoutX="10.0" layoutY="753.0" mnemonicParsing="false" onAction="#RefreshView" prefHeight="45.0" prefWidth="117.0" text="Refresh" />
                      </children>
                   </VBox>
                </children>
@@ -28,7 +29,7 @@
                                  <children>
                                     <VBox fx:id="itemDisplayBox" prefHeight="733.0" prefWidth="917.0" spacing="10.0" style="-fx-background-color: red;" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <children>
-                                          <HBox fx:id="itemDisplayContent" prefHeight="333.0" prefWidth="907.0" style="-fx-background-color: white; -fx-border-style: solid; visibility: true;">
+                                          <HBox fx:id="itemDisplayContent" prefHeight="333.0" prefWidth="907.0" spacing="7.0" style="-fx-background-color: white; -fx-border-style: solid; visibility: true;">
                                              <children>
                                                 <VBox minHeight="-Infinity" prefHeight="721.0" prefWidth="300.0" spacing="5.0" HBox.hgrow="ALWAYS">
                                                    <children>
@@ -101,11 +102,37 @@
                                                                   <TextArea fx:id="effectsText" prefHeight="144.0" prefWidth="923.0" />
                                                                </children>
                                                             </VBox>
+                                                            <VBox prefHeight="53.0" prefWidth="161.0">
+                                                               <children>
+                                                                  <Label text="Place in order" />
+                                                                  <TextField fx:id="placeInOrderText" text="TMP" />
+                                                               </children>
+                                                            </VBox>
                                                          </children>
                                                       </VBox>
                                                    </children>
                                                 </VBox>
-                                                <VBox fx:id="optionAttributes2" prefHeight="721.0" prefWidth="300.0" HBox.hgrow="ALWAYS" />
+                                                <VBox fx:id="optionAttributes2" prefHeight="721.0" prefWidth="300.0" HBox.hgrow="ALWAYS">
+                                                   <children>
+                                                      <VBox prefHeight="165.0" prefWidth="923.0">
+                                                         <children>
+                                                            <Label text="Can Keep" />
+                                                            <TextArea fx:id="canKeepText" prefHeight="144.0" prefWidth="923.0" />
+                                                         </children>
+                                                      </VBox>
+                                                      <VBox prefHeight="165.0" prefWidth="923.0">
+                                                         <children>
+                                                            <Label text="Can Pass" />
+                                                            <TextArea fx:id="canPassText" prefHeight="144.0" prefWidth="923.0" />
+                                                         </children>
+                                                      </VBox>
+                                                      <VBox layoutX="10.0" layoutY="175.0" prefHeight="165.0" prefWidth="923.0">
+                                                         <children>
+                                                            <Label text="On Pass" />
+                                                            <TextArea fx:id="onPassText" prefHeight="144.0" prefWidth="923.0" />
+                                                         </children>
+                                                      </VBox>
+                                                   </children></VBox>
                                              </children>
                                              <padding>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -121,6 +148,7 @@
                            <children>
                               <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#DeleteItem" prefHeight="45.0" prefWidth="185.0" text="Delete" HBox.hgrow="ALWAYS" />
                               <Button fx:id="saveButton" mnemonicParsing="false" onAction="#SaveItem" prefHeight="45.0" prefWidth="185.0" text="Save" HBox.hgrow="ALWAYS" />
+                              <Button fx:id="addChildButton" layoutX="205.0" layoutY="10.0" mnemonicParsing="false" onAction="#SetupCreation" prefHeight="45.0" prefWidth="185.0" text="Add Child" />
                               <Button fx:id="addButton" layoutX="205.0" layoutY="10.0" mnemonicParsing="false" onAction="#AddNewItem" prefHeight="45.0" prefWidth="185.0" text="Add New Item" visible="false" />
                            </children>
                         </HBox>

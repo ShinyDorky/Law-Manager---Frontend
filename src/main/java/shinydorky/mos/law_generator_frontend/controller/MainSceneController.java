@@ -44,9 +44,15 @@ public class MainSceneController {
     private TextArea descriptionText;
     @FXML
     private VBox descriptionArea;
-
     @FXML
-    private Button addLawTypeButton;
+    private TextField placeInOrderText;
+    @FXML
+    private TextArea canKeepText;
+    @FXML
+    private TextArea canPassText;
+    @FXML
+    private TextArea onPassText;
+
 
     @FXML
     private VBox optionAttributes1;
@@ -73,6 +79,8 @@ public class MainSceneController {
     private Button saveButton;
     @FXML
     private Button addButton;
+    @FXML
+    private Button addChildButton;
 
     public void initialize(Stage mainStage){
         this.mainStage = mainStage;
@@ -90,7 +98,6 @@ public class MainSceneController {
 
         treeView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue == null){
-
                 descriptionArea.setVisible(false);
                 optionAttributes1.setVisible(false);
                 optionAttributes2.setVisible(false);
@@ -100,6 +107,13 @@ public class MainSceneController {
                 deleteButton.setVisible(true);
                 saveButton.setVisible(true);
                 addButton.setVisible(false);
+
+
+                if (newValue.getValue().getItemDepth() != 2){
+                    addChildButton.setVisible(true);
+                } else {
+                    addChildButton.setVisible(false);
+                }
             }
         });
 
@@ -148,16 +162,19 @@ public class MainSceneController {
 
             ArrayList<LawType> types = RESTConnector.GetAllTypes();
             for(LawType type: types){
+                type.setItemDepth(0);
                 TreeItem<LawType> lawTypeItem = new TreeItem<>(type);
                 root.getChildren().add(lawTypeItem);
 
                 ArrayList<LawGroup> groups = RESTConnector.GetGroupsInType(type.getId());
                 for(LawGroup group: groups){
+                    group.setItemDepth(1);
                     TreeItem<LawType> lawGroupItem = new TreeItem<>(group);
                     lawTypeItem.getChildren().add(lawGroupItem);
 
                     ArrayList<LawOption> options = RESTConnector.GetOptionsInGroup(group.getId());
                     for(LawOption option: options){
+                        option.setItemDepth(2);
                         TreeItem<LawType> lawOptionItem = new TreeItem<>(option);
                         lawGroupItem.getChildren().add(lawOptionItem);
                     }
@@ -190,11 +207,19 @@ public class MainSceneController {
 
             descriptionText.setText(((LawOption)selectedItem).getDesc());
 
+
             statePowerOpinion.setText(((LawOption)selectedItem).getStatePowerOpinion().toString());
             militaryOpinion.setText(((LawOption)selectedItem).getMilitaryOpinion().toString());
             religiousUnityOpinion.setText(((LawOption)selectedItem).getReligiousUnityOpinion().toString());
             culturalToleranceOpinion.setText(((LawOption)selectedItem).getCulturalToleranceOpinion().toString());
             populismOpinion.setText(((LawOption)selectedItem).getPopulismOpinion().toString());
+
+            effectsText.setText(((LawOption)selectedItem).getEffects());
+            placeInOrderText.setText(((LawOption)selectedItem).getPlaceInOrder().toString());
+
+            canKeepText.setText(((LawOption)selectedItem).getCanKeep());
+            canPassText.setText(((LawOption)selectedItem).getCanPass());
+            onPassText.setText(((LawOption)selectedItem).getOnPass());
 
             effectsText.setText(((LawOption)selectedItem).getEffects());
         }
@@ -206,14 +231,17 @@ public class MainSceneController {
         Deselect();
         SetupCreation();
     }
+
     @FXML
     public void Deselect(){
         treeView.getSelectionModel().clearSelection();
     }
 
+    @FXML
     public void SetupCreation(){
         deleteButton.setVisible(false);
         saveButton.setVisible(false);
+        addChildButton.setVisible(false);
         addButton.setVisible(true);
         if (treeView.getSelectionModel().getSelectedIndex() == -1){
             descriptionArea.setVisible(false);
@@ -221,31 +249,133 @@ public class MainSceneController {
             optionAttributes2.setVisible(false);
             ClearFields();
         }
+        else if (treeView.getSelectionModel().getSelectedItem().getValue().getItemDepth() == 0){
+            descriptionArea.setVisible(true);
+            optionAttributes1.setVisible(false);
+            optionAttributes2.setVisible(false);
+            ClearFields();
+        }
+        else if (treeView.getSelectionModel().getSelectedItem().getValue().getItemDepth() == 1){
+            descriptionArea.setVisible(true);
+            optionAttributes1.setVisible(true);
+            optionAttributes2.setVisible(true);
+            ClearFields();
+        }
     }
 
     @FXML
     public void SaveItem(){
-        Long id = treeView.getSelectionModel().getSelectedItem().getValue().getId();
-        RESTConnector.updateLawType(LawType.builder()
-                .id(id).name(nameText.getText())
-                .signature(signatureText.getText())
-                .build()
-        );
-        SetupTreeView();
-        treeView.getSelectionModel().clearSelection();
-        ClearFields();
+        if (treeView.getSelectionModel().isEmpty()){
+            return;
+        }
+        if (treeView.getSelectionModel().getSelectedItem().getValue().getItemDepth() == 0){
+            Long id = treeView.getSelectionModel().getSelectedItem().getValue().getId();
+            RESTConnector.updateLawType(LawType.builder()
+                    .id(id)
+                    .name(nameText.getText())
+                    .signature(signatureText.getText())
+                    .build()
+            );
+        }
+        else if (treeView.getSelectionModel().getSelectedItem().getValue().getItemDepth() == 1){
+            Long id = treeView.getSelectionModel().getSelectedItem().getValue().getId();
+            Long parentId = ((LawGroup)treeView.getSelectionModel().getSelectedItem().getValue()).getLawTypeId();
+            RESTConnector.updateLawGroup(LawGroup.builder()
+                    .id(id)
+                    .name(nameText.getText())
+                    .signature(signatureText.getText())
+                    .desc(descriptionText.getText())
+                    .lawTypeId(parentId)
+                    .build()
+            );
+        }
+        else if (treeView.getSelectionModel().getSelectedItem().getValue().getItemDepth() == 2){
+            Long id = treeView.getSelectionModel().getSelectedItem().getValue().getId();
+            Long parentId = ((LawOption)treeView.getSelectionModel().getSelectedItem().getValue()).getLawGroupId();
+            RESTConnector.updateLawOption(LawOption.builder()
+                    .id(id)
+                    .name(nameText.getText())
+                    .signature(signatureText.getText())
+                    .desc(descriptionText.getText())
+                    .effects(effectsText.getText())
+                    .statePowerOpinion(Integer.valueOf(statePowerOpinion.getText()))
+                    .militaryOpinion(Integer.valueOf(militaryOpinion.getText()))
+                    .religiousUnityOpinion(Integer.valueOf(religiousUnityOpinion.getText()))
+                    .culturalToleranceOpinion(Integer.valueOf(culturalToleranceOpinion.getText()))
+                    .populismOpinion(Integer.valueOf(populismOpinion.getText()))
+                    .effects(effectsText.getText())
+                    .placeInOrder(Integer.valueOf(placeInOrderText.getText()))
+                    .canPass(canPassText.getText())
+                    .canKeep(canKeepText.getText())
+                    .onPass(onPassText.getText())
+                    .passCost("")
+                    .lawGroupId(parentId)
+                    .build()
+            );
+        }
+        RefreshView();
     }
     @FXML
     public void DeleteItem(){
-        RESTConnector.DeleteLawType(treeView.getSelectionModel().getSelectedItem().getValue().getId());
-        SetupTreeView();
-        treeView.getSelectionModel().clearSelection();
-        ClearFields();
+        if (treeView.getSelectionModel().isEmpty()){
+            return;
+        }
+        if (treeView.getSelectionModel().getSelectedItem().getValue().getItemDepth() == 0){
+            RESTConnector.DeleteLawType(treeView.getSelectionModel().getSelectedItem().getValue().getId());
+        }
+        else if (treeView.getSelectionModel().getSelectedItem().getValue().getItemDepth() == 1){
+            RESTConnector.DeleteLawGroup(treeView.getSelectionModel().getSelectedItem().getValue().getId());
+        }
+        else if (treeView.getSelectionModel().getSelectedItem().getValue().getItemDepth() == 2){
+            RESTConnector.DeleteLawOption(treeView.getSelectionModel().getSelectedItem().getValue().getId());
+        }
+        RefreshView();
     }
 
     @FXML
     public void AddNewItem(){
-        RESTConnector.createNewLawType(LawType.builder().name(nameText.getText()).signature(signatureText.getText()).build());
+        if (treeView.getSelectionModel().getSelectedIndex() == -1){
+            RESTConnector.createNewLawType(LawType.builder()
+                    .name(nameText.getText())
+                    .signature(signatureText.getText())
+                    .build()
+            );
+        }
+        else if (treeView.getSelectionModel().getSelectedItem().getValue().getItemDepth() == 0){
+            RESTConnector.createNewLawGroup(LawGroup.builder()
+                    .name(nameText.getText())
+                    .signature(signatureText.getText())
+                    .desc(descriptionText.getText())
+                            .lawTypeId(treeView.getSelectionModel().getSelectedItem().getValue().getId())
+                    .build()
+            );
+        }
+        else if (treeView.getSelectionModel().getSelectedItem().getValue().getItemDepth() == 1){
+            RESTConnector.createNewLawOption(LawOption.builder()
+                    .name(nameText.getText())
+                    .signature(signatureText.getText())
+                    .desc(descriptionText.getText())
+                    .effects(effectsText.getText())
+                    .statePowerOpinion(Integer.valueOf(statePowerOpinion.getText()))
+                    .militaryOpinion(Integer.valueOf(militaryOpinion.getText()))
+                    .religiousUnityOpinion(Integer.valueOf(religiousUnityOpinion.getText()))
+                    .culturalToleranceOpinion(Integer.valueOf(culturalToleranceOpinion.getText()))
+                    .populismOpinion(Integer.valueOf(populismOpinion.getText()))
+                    .effects(effectsText.getText())
+                    .placeInOrder(Integer.valueOf(placeInOrderText.getText()))
+                    .canPass(canPassText.getText())
+                    .canKeep(canKeepText.getText())
+                    .onPass(onPassText.getText())
+                    .passCost("")
+                            .lawGroupId(treeView.getSelectionModel().getSelectedItem().getValue().getId())
+                    .build()
+            );
+        }
+        RefreshView();
+    }
+
+    @FXML
+    public void RefreshView() {
         SetupTreeView();
         treeView.getSelectionModel().clearSelection();
         ClearFields();
@@ -261,5 +391,9 @@ public class MainSceneController {
         culturalToleranceOpinion.setText("");
         populismOpinion.setText("");
         effectsText.setText("");
+        placeInOrderText.setText("");
+        canKeepText.setText("");
+        canPassText.setText("");
+        onPassText.setText("");
     }
 }
