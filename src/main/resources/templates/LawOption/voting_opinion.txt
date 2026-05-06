@@ -14,29 +14,9 @@
 				    has_realm_law = MOS_laws_<X:group>_<X:neighbours-1>
 			    }
 			}
-			<X:OPINIONS_UPGRADE>
-			if = {
-				limit = {
-					var:MOS_law_opinion_<OPINION> 0
-				}
-				multiply = 0.55
-			}
-			else = {
-				multiply = 0.25
-			}
-			<X:/OPINIONS_UPGRADE>
+<X:OPINIONS_UPGRADE>
 		}
 		else = {
-			<X:OPINIONS_DOWNGRADE>
-			if = {
-				limit = {
-					var:MOS_law_opinion_<OPINION> > 0
-				}
-				multiply = -0.4
-			}
-			else = {
-				multiply = -0.25
-			}
-			<X:/OPINIONS_DOWNGRADE>
+<X:OPINIONS_DOWNGRADE>
 		}
     }

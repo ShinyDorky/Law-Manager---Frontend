@@ -43,3 +43,4 @@ public class LawOption extends LawType{
                 || l1.getPlaceInOrder() == l2.getPlaceInOrder() - 1));
     }
 }
+
