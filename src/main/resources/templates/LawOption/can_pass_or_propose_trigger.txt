@@ -1,11 +1,10 @@
-# <X:name>
-mos_can_pass_or_propose_<X:group>_<X:name>_trigger = {
+# <X:signature>
+MOS_can_pass_or_propose_<X:group>_<X:signature>_trigger = {
+    <X:can_pass>
     OR = {
-        has_realm_law = <X:group>_<X:neighbours>
+        has_realm_law = MOS_laws_<X:group>_<X:neighbours>
     }
 }
-mos_can_keep_<X:group>_<X:name>_trigger = {
-    OR = {
-        has_realm_law = <X:group>_<X:neighbours>
-    }
+MOS_can_keep_<X:group>_<X:signature>_trigger = {
+    <X:can_keep>
 }

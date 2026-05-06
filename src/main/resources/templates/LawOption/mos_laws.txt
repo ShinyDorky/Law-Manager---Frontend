@@ -1,0 +1,30 @@
+    MOS_laws_<X:group>_<X:signature> = {
+		modifier = {
+		    <X:effects>
+		}
+		should_start_with = {
+		}
+		can_keep = {
+			MOS_can_keep_<X:group>_<X:signature>_trigger = yes
+			MOS_has_legal_authority_law_trigger = yes
+            custom_tooltip = {
+				text = "MOS_CANNOT_PROPOSE_LAWS_TT"
+				trigger_if = {
+					limit = {
+						is_independent_ruler = no
+						MOS_in_the_same_legislature = { POTENTIAL_PEER_1 = liege POTENTIAL_PEER_2 = this }
+					}
+					liege ?= {
+						has_realm_law = MOS_laws_<X:group>_<X:signature>
+					}
+				}
+			}
+		}
+		can_pass = {
+			MOS_can_pass_law_universal = yes
+			MOS_can_pass_or_propose_<X:group>_<X:signature>_trigger = yes
+		}
+		pass_cost = {
+		}
+	}
+

@@ -1,0 +1,3 @@
+                            mos_currently_active_law_display = {
+								visible = "[And(EqualTo_string(GuiLawGroup.GetLawGroup.GetName, Localize('MOS_laws_<X:group>_<X:signature>')),GetScriptedGui('mos_voting_on_<X:group>').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End) )]"
+							}

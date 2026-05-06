@@ -1,0 +1,3 @@
+ # <X:signature>
+ <X:group>_<X:signature>: "<X:name>"
+ <X:group>_<X:signature>_effects: "<X:desc>"

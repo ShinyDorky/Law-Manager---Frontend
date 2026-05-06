@@ -1,0 +1,15 @@
+    # <X:signature>
+    else_if = {
+    	limit = {
+    		has_variable = MOS_preserve_law_<X:group>_<X:signature>
+    	}
+		if = {
+			limit = {
+				NOT = {
+					has_realm_law = MOS_laws_<X:group>_<X:signature>
+				}
+			}
+			add_realm_law_skip_effects = MOS_laws_<X:group>_<X:signature>
+		}
+    	remove_variable = MOS_preserve_law_<X:group>_<X:signature>
+    }

@@ -36,9 +36,25 @@ public class LawOptionReplacer {
                 if (line.contains("<X:name>")){
                     line = line.replaceAll("<X:name>", lawOption.getName());
                 }
-                if (line.contains("<X:group>")){
-                    line = line.replaceAll("<X:group>", lawOption.getParentLawGroup().getName());
+                if (line.contains("<X:desc>")){
+                    line = line.replaceAll("<X:desc>", lawOption.getDesc());
                 }
+                if (line.contains("<X:signature>")){
+                    line = line.replaceAll("<X:signature>", lawOption.getSignature());
+                }
+                if (line.contains("<X:group>")){
+                    line = line.replaceAll("<X:group>", lawOption.getParentLawGroup().getSignature());
+                }
+                if (line.contains("<X:can_keep>")){
+                    line = line.replaceAll("<X:can_keep>", lawOption.getCanKeep());
+                }
+                if (line.contains("<X:can_pass>")){
+                    line = line.replaceAll("<X:can_pass>", lawOption.getCanPass());
+                }
+                if (line.contains("<X:effects>")){
+                    line = line.replaceAll("<X:effects>", lawOption.getEffects());
+                }
+
 
 
                 if (line.contains("<X:neighbours>")){
@@ -50,7 +66,30 @@ public class LawOptionReplacer {
                             result.add(lineCopy);
                         }
                     }
-                } else {
+                }
+                else if (line.contains("<X:neighbours-1>")){
+                    for (LawOption neighbour: lawOption.getParentLawGroup().getChildOptions()){
+                        if (neighbour.getPlaceInOrder() == lawOption.getPlaceInOrder() - 1){
+                            String lineCopy = line;
+                            lineCopy = lineCopy.replaceAll("<X:neighbours-1>", neighbour.getName());
+                            lineCopy = lineCopy + "\n";
+                            result.add(lineCopy);
+                        }
+                    }
+                }
+                else if (line.contains("<X:neighbours+1>")){
+                    for (LawOption neighbour: lawOption.getParentLawGroup().getChildOptions()){
+                        if (neighbour.getPlaceInOrder() == lawOption.getPlaceInOrder() + 1){
+                            String lineCopy = line;
+                            lineCopy = lineCopy.replaceAll("<X:neighbours+1>", neighbour.getName());
+                            lineCopy = lineCopy + "\n";
+                            result.add(lineCopy);
+                        }
+                    }
+                }
+
+                //TODO: REPLACE OPINION VALUES IN VOTING OPINION FILE
+                else {
                     line = line + "\n";
                     result.add(line);
                 }

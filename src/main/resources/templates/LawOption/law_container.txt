@@ -1,0 +1,12 @@
+                    # <X:group>_<X:signature>
+					button_mos_law_button_voting = {
+						visible = "[EqualTo_string(Law.GetNameNoTooltip, Localize('MOS_laws_<X:group>_<X:signature>'))]"
+						blockoverride "passed_law"
+						{
+							onclick = "[GetScriptedGui('MOS_start_law_vote_gui_<X:group>_<X:signature>').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+						}
+						blockoverride "can_call_vote"
+						{
+							enabled = "[Or(GuiLaw.IsEnacted, And(GetScriptedGui('MOS_can_interact_with_legal_system_gui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ), GetScriptedGui('MOS_can_start_law_vote_gui_<X:group>_<X:signature>').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End)))]"
+						}
+					}

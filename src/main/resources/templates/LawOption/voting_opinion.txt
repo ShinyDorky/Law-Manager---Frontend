@@ -1,0 +1,42 @@
+    # <X:signature>
+    else_if = {
+        limit = {
+			OR = {
+				has_variable = MOS_start_law_vote_<X:group>_<X:signature>
+				liege = {
+					has_variable = MOS_start_law_vote_<X:group>_<X:signature>
+				}
+			}
+        }
+        if = {
+			limit = {
+			    OR = {
+				    has_realm_law = MOS_laws_<X:group>_<X:neighbours-1>
+			    }
+			}
+			<X:OPINIONS_UPGRADE>
+			if = {
+				limit = {
+					var:MOS_law_opinion_<OPINION> 0
+				}
+				multiply = 0.55
+			}
+			else = {
+				multiply = 0.25
+			}
+			<X:/OPINIONS_UPGRADE>
+		}
+		else = {
+			<X:OPINIONS_DOWNGRADE>
+			if = {
+				limit = {
+					var:MOS_law_opinion_<OPINION> > 0
+				}
+				multiply = -0.4
+			}
+			else = {
+				multiply = -0.25
+			}
+			<X:/OPINIONS_DOWNGRADE>
+		}
+    }

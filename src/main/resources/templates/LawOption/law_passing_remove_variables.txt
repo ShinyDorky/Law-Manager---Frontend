@@ -1,0 +1,1 @@
+	remove_variable = mos_start_law_vote_<X:group>_<X:signature>

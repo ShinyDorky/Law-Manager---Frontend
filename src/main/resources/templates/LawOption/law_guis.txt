@@ -1,0 +1,29 @@
+# <X:signature>
+MOS_start_law_vote_gui_<X:group>_<X:signature> = {
+	effect = {
+		MOS_clear_prepared_laws_effect = yes
+		set_variable = MOS_start_law_vote_<X:group>_<X:signature>
+		every_liege_or_above = {
+			MOS_clear_prepared_laws_effect = yes
+			set_variable = MOS_start_law_vote_<X:group>_<X:signature>
+		}
+	}
+	is_shown = {
+		trigger_if = {
+			limit = {
+				MOS_this_is_legislature_owner = yes
+			}
+			OR = {
+				has_variable = MOS_start_law_vote_<X:group>_<X:signature>
+			}
+		}
+		trigger_else = {
+			any_liege_or_above = {
+			    MOS_i_am_legislature_owner_of = { POTENTIAL_UNDERLING = prev }
+				OR = {
+					has_variable = MOS_start_law_vote_<X:group>_<X:signature>
+				}
+			}
+		}
+	}
+}
