@@ -22,6 +22,7 @@ import shinydorky.mos.law_generator_frontend.replacer.LawOptionReplacer;
 import shinydorky.mos.law_generator_frontend.rest.RESTConnector;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 @Component
 @RequiredArgsConstructor
@@ -215,6 +216,12 @@ public class MainSceneController {
             descriptionText.setText(((LawGroup)selectedItem).getDesc());
 
         } else if (selectedItem.getClass() == LawOption.class){
+            if (Objects.equals(statePowerOpinion.getText(), "")) statePowerOpinion.setText("0");
+            if (Objects.equals(militaryOpinion.getText(), "")) militaryOpinion.setText("0");
+            if (Objects.equals(religiousUnityOpinion.getText(), "")) religiousUnityOpinion.setText("0");
+            if (Objects.equals(culturalToleranceOpinion.getText(), "")) culturalToleranceOpinion.setText("0");
+            if (Objects.equals(populismOpinion.getText(), "")) populismOpinion.setText("0");
+            if (Objects.equals(placeInOrderText.getText(), "")) placeInOrderText.setText("0");
             descriptionArea.setVisible(true);
             optionAttributes1.setVisible(true);
             optionAttributes2.setVisible(true);
@@ -307,6 +314,12 @@ public class MainSceneController {
         else if (treeView.getSelectionModel().getSelectedItem().getValue().getItemDepth() == 2){
             Long id = treeView.getSelectionModel().getSelectedItem().getValue().getId();
             Long parentId = ((LawOption)treeView.getSelectionModel().getSelectedItem().getValue()).getLawGroupId();
+            if (Objects.equals(statePowerOpinion.getText(), "")) statePowerOpinion.setText("0");
+            if (Objects.equals(militaryOpinion.getText(), "")) militaryOpinion.setText("0");
+            if (Objects.equals(religiousUnityOpinion.getText(), "")) religiousUnityOpinion.setText("0");
+            if (Objects.equals(culturalToleranceOpinion.getText(), "")) culturalToleranceOpinion.setText("0");
+            if (Objects.equals(populismOpinion.getText(), "")) populismOpinion.setText("0");
+            if (Objects.equals(placeInOrderText.getText(), "")) placeInOrderText.setText("0");
             RESTConnector.updateLawOption(LawOptionDto.builder()
                     .id(id)
                     .name(nameText.getText())
