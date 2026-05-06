@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.util.Objects;
+
 @SuperBuilder
 @Data
 @AllArgsConstructor
@@ -33,4 +35,11 @@ public class LawOption extends LawType{
     }
 
     private LawGroup parentLawGroup;
+
+    public static boolean AreNeighbours(LawOption l1, LawOption l2){
+        return (!Objects.equals(l1.getId(), l2.getId())
+                && (l1.getPlaceInOrder() == l2.getPlaceInOrder()
+                || l1.getPlaceInOrder() == l2.getPlaceInOrder() + 1
+                || l1.getPlaceInOrder() == l2.getPlaceInOrder() - 1));
+    }
 }

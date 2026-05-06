@@ -148,6 +148,7 @@
                            <children>
                               <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#DeleteItem" prefHeight="45.0" prefWidth="185.0" text="Delete" HBox.hgrow="ALWAYS" />
                               <Button fx:id="saveButton" mnemonicParsing="false" onAction="#SaveItem" prefHeight="45.0" prefWidth="185.0" text="Save" HBox.hgrow="ALWAYS" />
+                              <Button fx:id="generateFilesButton" layoutX="400.0" layoutY="10.0" mnemonicParsing="false" onAction="#GenerateFiles" prefHeight="45.0" prefWidth="185.0" text="Generate Files" />
                               <Button fx:id="addChildButton" layoutX="205.0" layoutY="10.0" mnemonicParsing="false" onAction="#SetupCreation" prefHeight="45.0" prefWidth="185.0" text="Add Child" />
                               <Button fx:id="addButton" layoutX="205.0" layoutY="10.0" mnemonicParsing="false" onAction="#AddNewItem" prefHeight="45.0" prefWidth="185.0" text="Add New Item" visible="false" />
                            </children>

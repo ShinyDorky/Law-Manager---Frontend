@@ -18,6 +18,7 @@ import shinydorky.mos.law_generator_frontend.dto.LawTypeDto;
 import shinydorky.mos.law_generator_frontend.model.LawGroup;
 import shinydorky.mos.law_generator_frontend.model.LawOption;
 import shinydorky.mos.law_generator_frontend.model.LawType;
+import shinydorky.mos.law_generator_frontend.replacer.LawOptionReplacer;
 import shinydorky.mos.law_generator_frontend.rest.RESTConnector;
 
 import java.util.ArrayList;
@@ -84,6 +85,8 @@ public class MainSceneController {
     private Button addButton;
     @FXML
     private Button addChildButton;
+    @FXML
+    private Button generateFilesButton;
 
     public void initialize(Stage mainStage){
         this.mainStage = mainStage;
@@ -101,14 +104,22 @@ public class MainSceneController {
 
         treeView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue == null){
+                System.out.println("NULL");
                 descriptionArea.setVisible(false);
                 optionAttributes1.setVisible(false);
                 optionAttributes2.setVisible(false);
+                deleteButton.setVisible(false);
+                saveButton.setVisible(false);
+                generateFilesButton.setVisible(false);
+                addButton.setVisible(false);
+                addChildButton.setVisible(false);
                 ClearFields();
             } else {
+                System.out.println("NOT NULL");
                 DisplayChosenItem(newValue.getValue());
                 deleteButton.setVisible(true);
                 saveButton.setVisible(true);
+                generateFilesButton.setVisible(true);
                 addButton.setVisible(false);
 
 
@@ -245,6 +256,7 @@ public class MainSceneController {
         deleteButton.setVisible(false);
         saveButton.setVisible(false);
         addChildButton.setVisible(false);
+        generateFilesButton.setVisible(false);
         addButton.setVisible(true);
         if (treeView.getSelectionModel().getSelectedIndex() == -1){
             descriptionArea.setVisible(false);
@@ -375,6 +387,13 @@ public class MainSceneController {
             );
         }
         RefreshView();
+    }
+
+    @FXML
+    public void GenerateFiles(){
+        if (treeView.getSelectionModel().getSelectedItem().getValue().getItemDepth() == 2){
+            LawOptionReplacer.WriteAllFiles((LawOption) treeView.getSelectionModel().getSelectedItem().getValue());
+        }
     }
 
     @FXML
