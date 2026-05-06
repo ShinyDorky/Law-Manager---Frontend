@@ -66,6 +66,14 @@ public class MainSceneController {
     @FXML
     private TextArea effectsText;
 
+
+    @FXML
+    private Button deleteButton;
+    @FXML
+    private Button saveButton;
+    @FXML
+    private Button addButton;
+
     public void initialize(Stage mainStage){
         this.mainStage = mainStage;
         resize();
@@ -89,6 +97,9 @@ public class MainSceneController {
                 ClearFields();
             } else {
                 DisplayChosenItem(newValue.getValue());
+                deleteButton.setVisible(true);
+                saveButton.setVisible(true);
+                addButton.setVisible(false);
             }
         });
 
@@ -191,12 +202,19 @@ public class MainSceneController {
     }
 
     @FXML
+    public void DisplayLawTypeCreation(){
+        Deselect();
+        SetupCreation();
+    }
+    @FXML
     public void Deselect(){
         treeView.getSelectionModel().clearSelection();
-        SetupCreation();
     }
 
     public void SetupCreation(){
+        deleteButton.setVisible(false);
+        saveButton.setVisible(false);
+        addButton.setVisible(true);
         if (treeView.getSelectionModel().getSelectedIndex() == -1){
             descriptionArea.setVisible(false);
             optionAttributes1.setVisible(false);
@@ -207,7 +225,12 @@ public class MainSceneController {
 
     @FXML
     public void SaveItem(){
-        RESTConnector.createNewLawType(LawType.builder().name(nameText.getText()).signature(signatureText.getText()).build());
+        Long id = treeView.getSelectionModel().getSelectedItem().getValue().getId();
+        RESTConnector.updateLawType(LawType.builder()
+                .id(id).name(nameText.getText())
+                .signature(signatureText.getText())
+                .build()
+        );
         SetupTreeView();
         treeView.getSelectionModel().clearSelection();
         ClearFields();
@@ -215,6 +238,14 @@ public class MainSceneController {
     @FXML
     public void DeleteItem(){
         RESTConnector.DeleteLawType(treeView.getSelectionModel().getSelectedItem().getValue().getId());
+        SetupTreeView();
+        treeView.getSelectionModel().clearSelection();
+        ClearFields();
+    }
+
+    @FXML
+    public void AddNewItem(){
+        RESTConnector.createNewLawType(LawType.builder().name(nameText.getText()).signature(signatureText.getText()).build());
         SetupTreeView();
         treeView.getSelectionModel().clearSelection();
         ClearFields();

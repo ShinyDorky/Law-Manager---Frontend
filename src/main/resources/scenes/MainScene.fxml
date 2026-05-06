@@ -13,7 +13,7 @@
                   <VBox prefHeight="388.0" prefWidth="121.0" spacing="10.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
                      <children>
                         <TreeView fx:id="treeView" prefHeight="331.0" prefWidth="112.0" style="-fx-border-style: solid;" VBox.vgrow="ALWAYS" />
-                        <Button fx:id="addLawTypeButton" mnemonicParsing="false" onAction="#Deselect" prefHeight="45.0" prefWidth="191.0" text="Add new&#10;Law Type" />
+                        <Button fx:id="addLawTypeButton" mnemonicParsing="false" onAction="#DisplayLawTypeCreation" prefHeight="45.0" prefWidth="191.0" text="Add new&#10;Law Type" />
                      </children>
                   </VBox>
                </children>
@@ -119,8 +119,9 @@
                         </ScrollPane>
                         <HBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="200.0" spacing="10.0" VBox.vgrow="NEVER">
                            <children>
-                              <Button mnemonicParsing="false" onAction="#DeleteItem" prefHeight="45.0" prefWidth="185.0" text="Delete" HBox.hgrow="ALWAYS" />
-                              <Button mnemonicParsing="false" onAction="#SaveItem" prefHeight="45.0" prefWidth="185.0" text="Save" HBox.hgrow="ALWAYS" />
+                              <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#DeleteItem" prefHeight="45.0" prefWidth="185.0" text="Delete" HBox.hgrow="ALWAYS" />
+                              <Button fx:id="saveButton" mnemonicParsing="false" onAction="#SaveItem" prefHeight="45.0" prefWidth="185.0" text="Save" HBox.hgrow="ALWAYS" />
+                              <Button fx:id="addButton" layoutX="205.0" layoutY="10.0" mnemonicParsing="false" onAction="#AddNewItem" prefHeight="45.0" prefWidth="185.0" text="Add New Item" visible="false" />
                            </children>
                         </HBox>
                      </children>

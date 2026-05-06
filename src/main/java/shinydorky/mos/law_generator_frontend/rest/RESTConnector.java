@@ -56,6 +56,10 @@ public class RESTConnector {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.postForObject(address + "/lawType", lawType, JsonNode.class);
     }
+    public static void updateLawType(LawType lawType){
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.put(address + "/lawType/" + lawType.getId(), lawType, JsonNode.class);
+    }
 
     public static void DeleteLawType(Long id){
         RestTemplate restTemplate = new RestTemplate();
