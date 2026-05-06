@@ -36,6 +36,13 @@ public class LawOption extends LawType{
 
     private LawGroup parentLawGroup;
 
+    /**
+     *
+     * @param l1 Any LawOption object
+     * @param l2 Any LawOption object
+     * @return Are the considered LawOption objects neighbours - is the difference between their PlaceInOrder values at
+     * most 1
+     */
     public static boolean AreNeighbours(LawOption l1, LawOption l2){
         return (!Objects.equals(l1.getId(), l2.getId())
                 && (l1.getPlaceInOrder() == l2.getPlaceInOrder()

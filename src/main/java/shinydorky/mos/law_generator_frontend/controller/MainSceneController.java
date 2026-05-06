@@ -105,7 +105,6 @@ public class MainSceneController {
 
         treeView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue == null){
-                System.out.println("NULL");
                 descriptionArea.setVisible(false);
                 optionAttributes1.setVisible(false);
                 optionAttributes2.setVisible(false);
@@ -116,7 +115,6 @@ public class MainSceneController {
                 addChildButton.setVisible(false);
                 ClearFields();
             } else {
-                System.out.println("NOT NULL");
                 DisplayChosenItem(newValue.getValue());
                 deleteButton.setVisible(true);
                 saveButton.setVisible(true);
@@ -154,20 +152,11 @@ public class MainSceneController {
         scrollPaneContent.setMinHeight(scrollPane.getHeight() - 5);
         scrollPaneContent.setMaxHeight(scrollPane.getHeight() - 5);
         }
-//        scrollPaneContent.setMinWidth(scrollPane.getWidth() - 5);
-//        scrollPaneContent.setMaxWidth(scrollPane.getWidth() - 5);
-//        scrollPaneContent.setMinHeight(scrollPane.getHeight() - 5);
-//        scrollPaneContent.setMaxHeight(scrollPane.getHeight() - 5);
-//        treeView.setMinWidth(mainStage.getWidth()/5);
-//        treeView.setMaxWidth(mainStage.getWidth()/5);
-//        addLawTypeButton.setMinWidth(mainStage.getWidth()/5);
-//        addLawTypeButton.setMaxWidth(mainStage.getWidth()/5);
-//        displayPaneType.setMinWidth(mainStage.getWidth() - mainStage.getWidth()/5 - 40);
-//        displayPaneType.setMaxWidth(mainStage.getWidth() - mainStage.getWidth()/5 - 40);
-//        displayPaneGroup.setMinWidth(mainStage.getWidth() - mainStage.getWidth()/5 - 40);
-//        displayPaneGroup.setMaxWidth(mainStage.getWidth() - mainStage.getWidth()/5 - 40);
     }
 
+    /**
+     * Make call to a locally running Backend instance and download all current data.
+     */
     private void SetupTreeView(){
         TreeItem<LawType> root = new TreeItem<>();
         treeView.setShowRoot(false);
@@ -258,6 +247,9 @@ public class MainSceneController {
         treeView.getSelectionModel().clearSelection();
     }
 
+    /**
+     * Display UI elements necessary for the creation of the desired Item
+     */
     @FXML
     public void SetupCreation(){
         deleteButton.setVisible(false);
@@ -285,6 +277,10 @@ public class MainSceneController {
         }
     }
 
+    /**
+     * Modify selected item by uploading a copy of it to the Backend with the new values.
+     * Will reload UI and re-synchronize with the Backend database.
+     */
     @FXML
     public void SaveItem(){
         if (treeView.getSelectionModel().isEmpty()){
@@ -360,6 +356,10 @@ public class MainSceneController {
         RefreshView();
     }
 
+    /**
+     * Save newly created item by uploading it to the Backend. Will reload UI and re-synchronize with the Backend
+     * database.
+     */
     @FXML
     public void AddNewItem(){
         if (treeView.getSelectionModel().getSelectedIndex() == -1){
@@ -402,6 +402,9 @@ public class MainSceneController {
         RefreshView();
     }
 
+    /**
+     * Generate all the necessary files for the selected Item
+     */
     @FXML
     public void GenerateFiles(){
         if (treeView.getSelectionModel().getSelectedItem().getValue().getItemDepth() == 2){
