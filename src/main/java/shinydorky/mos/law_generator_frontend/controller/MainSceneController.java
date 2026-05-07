@@ -444,43 +444,24 @@ public class MainSceneController {
 
     @FXML
     public void RefreshView() {
-        Stack<Long> itemsToExpand = new Stack<>();
+        Stack<Integer> itemsToExpand = new Stack<>();
 
         TreeItem<LawType> selectedItem = treeView.getSelectionModel().getSelectedItem();
-        while (selectedItem != null &&selectedItem.getValue() != null){
-            itemsToExpand.push(selectedItem.getValue().getId());
-            selectedItem = selectedItem.getParent();
-        }
 
-        if (!itemsToExpand.isEmpty()){
-            int selectionIndex = 0;
-            SetupTreeView();
-            treeView.getSelectionModel().clearSelection();
-            ClearFields();
-
-            ObservableList<TreeItem<LawType>> children = treeView.getRoot().getChildren();
-            TreeItem<LawType> toExpand = null;
-            Long seekingId = itemsToExpand.pop();
-            for (TreeItem<LawType> typeTreeItem : children){
-                if (Objects.equals(typeTreeItem.getValue().getId(), seekingId)){
-                    toExpand = typeTreeItem;
-                    selectionIndex = treeView.getRow(typeTreeItem);
-                }
-            }
-            while (toExpand != null && !itemsToExpand.isEmpty()){
-                toExpand.setExpanded(true);
-                seekingId = itemsToExpand.pop();
-                ObservableList<TreeItem<LawType>> toExpandCandidates = toExpand.getChildren();
-                toExpand = null;
-                for (TreeItem<LawType> candidate: toExpandCandidates){
-                    if (Objects.equals(candidate.getValue().getId(), seekingId)){
-                        toExpand = candidate;
-                        selectionIndex = treeView.getRow(candidate);
-                    }
-                }
-            }
-            treeView.getSelectionModel().select(selectionIndex);
+        int selectionIndex = treeView.getRow(selectedItem);
+        Queue<Integer> toExpand = new ArrayDeque<>();
+        for (TreeItem<LawType> child: treeView.getRoot().getChildren()){
+            toExpand = GetExpandedItemsIds(toExpand, child);
         }
+        SetupTreeView();
+        treeView.getSelectionModel().clearSelection();
+        ClearFields();
+
+        System.out.println(toExpand);
+        while (!toExpand.isEmpty()){
+            treeView.getTreeItem(toExpand.remove()).setExpanded(true);
+        }
+        treeView.getSelectionModel().select(selectionIndex);
     }
 
     private void ClearFields(){
@@ -497,5 +478,15 @@ public class MainSceneController {
         canKeepText.setText("");
         canPassText.setText("");
         onPassText.setText("");
+    }
+
+    private Queue<Integer> GetExpandedItemsIds(Queue<Integer> queue, TreeItem<LawType> root){
+        if (root.isExpanded()){
+            queue.add(treeView.getRow(root));
+            for (TreeItem<LawType> child: root.getChildren()){
+                queue = GetExpandedItemsIds(queue, child);
+            }
+        }
+        return queue;
     }
 }
