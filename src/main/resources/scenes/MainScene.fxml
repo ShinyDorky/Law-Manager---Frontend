@@ -48,7 +48,7 @@
                                                       <VBox fx:id="descriptionArea" layoutX="10.0" layoutY="63.0" prefHeight="200.0" prefWidth="448.0" visible="false">
                                                                <children>
                                                             <Label text="Description" />
-                                                            <TextArea fx:id="descriptionText" prefHeight="500.0" prefWidth="448.0" />
+                                                            <TextArea fx:id="descriptionText" prefHeight="500.0" prefWidth="448.0" wrapText="true" />
                                                          </children>
                                                       </VBox>
                                                       <VBox fx:id="optionAttributes1" prefHeight="395.0" prefWidth="923.0" visible="false" VBox.vgrow="ALWAYS">
@@ -99,7 +99,7 @@
                                                             <VBox layoutX="10.0" layoutY="63.0" prefHeight="165.0" prefWidth="923.0">
                                                                <children>
                                                                   <Label text="Effects" />
-                                                                  <TextArea fx:id="effectsText" prefHeight="144.0" prefWidth="923.0" />
+                                                                  <TextArea fx:id="effectsText" prefHeight="144.0" prefWidth="923.0" wrapText="true" />
                                                                </children>
                                                             </VBox>
                                                             <VBox prefHeight="53.0" prefWidth="161.0">
@@ -117,19 +117,19 @@
                                                       <VBox prefHeight="165.0" prefWidth="923.0">
                                                          <children>
                                                             <Label text="Can Keep" />
-                                                            <TextArea fx:id="canKeepText" prefHeight="144.0" prefWidth="923.0" />
+                                                            <TextArea fx:id="canKeepText" prefHeight="144.0" prefWidth="923.0" wrapText="true" />
                                                          </children>
                                                       </VBox>
                                                       <VBox prefHeight="165.0" prefWidth="923.0">
                                                          <children>
                                                             <Label text="Can Pass" />
-                                                            <TextArea fx:id="canPassText" prefHeight="144.0" prefWidth="923.0" />
+                                                            <TextArea fx:id="canPassText" prefHeight="144.0" prefWidth="923.0" wrapText="true" />
                                                          </children>
                                                       </VBox>
                                                       <VBox layoutX="10.0" layoutY="175.0" prefHeight="165.0" prefWidth="923.0">
                                                          <children>
                                                             <Label text="On Pass" />
-                                                            <TextArea fx:id="onPassText" prefHeight="144.0" prefWidth="923.0" />
+                                                            <TextArea fx:id="onPassText" prefHeight="144.0" prefWidth="923.0" wrapText="true" />
                                                          </children>
                                                       </VBox>
                                                    </children></VBox>
