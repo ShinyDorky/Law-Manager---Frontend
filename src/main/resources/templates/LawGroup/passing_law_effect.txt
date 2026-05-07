@@ -1,3 +1,7 @@
     # <X:signature>
-
- <X:lawOptions>
+    else_if = {
+        limit = {
+            has_variable = MOS_start_law_vote_<X:group>
+        }
+<X:lawOptions>
+    }

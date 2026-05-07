@@ -1,2 +1,3 @@
     # <X:signature>
+    remove_variable = MOS_start_law_vote_<X:signature>
 <X:lawOptions>

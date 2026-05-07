@@ -5,4 +5,5 @@
 			}
 			MOS_clear_prepared_laws_effect = yes
 			set_variable = MOS_start_law_vote_<X:group>_<X:signature>
+			set_variable = MOS_start_law_vote_<X:group>
 		}

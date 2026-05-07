@@ -1,22 +1,22 @@
-    # <X:signature>
-    else_if = {
-        limit = {
-			OR = {
-				has_variable = MOS_start_law_vote_<X:group>_<X:signature>
-				liege = {
-					has_variable = MOS_start_law_vote_<X:group>_<X:signature>
-				}
-			}
-        }
-        if = {
-			limit = {
+        # <X:signature>
+        else_if = {
+            limit = {
 			    OR = {
-				    has_realm_law = MOS_laws_<X:group>_<X:neighbours-1>
+				    has_variable = MOS_start_law_vote_<X:group>_<X:signature>
+				    liege = {
+				    	has_variable = MOS_start_law_vote_<X:group>_<X:signature>
+				    }
 			    }
-			}
+            }
+            if = {
+			    limit = {
+			        OR = {
+				        has_realm_law = MOS_laws_<X:group>_<X:neighbours-1>
+			        }
+			    }
 <X:OPINIONS_UPGRADE>
-		}
-		else = {
+		    }
+		    else = {
 <X:OPINIONS_DOWNGRADE>
-		}
-    }
+		    }
+        }
