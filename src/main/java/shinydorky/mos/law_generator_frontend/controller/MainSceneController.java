@@ -18,6 +18,7 @@ import shinydorky.mos.law_generator_frontend.dto.LawTypeDto;
 import shinydorky.mos.law_generator_frontend.model.LawGroup;
 import shinydorky.mos.law_generator_frontend.model.LawOption;
 import shinydorky.mos.law_generator_frontend.model.LawType;
+import shinydorky.mos.law_generator_frontend.replacer.LawGroupReplacer;
 import shinydorky.mos.law_generator_frontend.replacer.LawOptionReplacer;
 import shinydorky.mos.law_generator_frontend.rest.RESTConnector;
 
@@ -407,7 +408,10 @@ public class MainSceneController {
      */
     @FXML
     public void GenerateFiles(){
-        if (treeView.getSelectionModel().getSelectedItem().getValue().getItemDepth() == 2){
+        if (treeView.getSelectionModel().getSelectedItem().getValue().getItemDepth() == 1){
+            LawGroupReplacer.WriteAllFiles((LawGroup) treeView.getSelectionModel().getSelectedItem().getValue());
+        }
+        else if (treeView.getSelectionModel().getSelectedItem().getValue().getItemDepth() == 2){
             LawOptionReplacer.WriteAllFiles((LawOption) treeView.getSelectionModel().getSelectedItem().getValue());
         }
     }

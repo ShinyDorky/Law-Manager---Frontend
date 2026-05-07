@@ -14,6 +14,8 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.Vector;
 
+import static shinydorky.mos.law_generator_frontend.generator.FileGenerator.WriteToFile;
+
 public class LawOptionReplacer {
     private static final Logger LOGGER = LoggerFactory.getLogger(LawOptionReplacer.class.getName());
 
@@ -56,24 +58,6 @@ public class LawOptionReplacer {
 
 
                 if (line.contains("<X:OPINIONS_UPGRADE>")){
-//                    StringBuilder upgradeOpinionsString = new StringBuilder();
-//                    for (LawOptionOpinionType type: LawOptionOpinionType.values()){
-//                        float opinionMultiplier = lawOption.getParentLawGroup().GetChangeOpinionPos(
-//                                type, lawOption.getPlaceInOrder(), -1);
-//                        float opinionMultiplierNeg = lawOption.getParentLawGroup().GetChangeOpinionNeg(
-//                                type, lawOption.getPlaceInOrder(), -1);
-//                        if (opinionMultiplier != 0){
-//                            upgradeOpinionsString.append("\t\t\tif = {");
-//                            upgradeOpinionsString.append("\t\t\t\tlimit = {");
-//                            upgradeOpinionsString.append("\t\t\t\t\tvar:MOS_law_opinion_").append(type.toString().toLowerCase()).append(" > 0");
-//                            upgradeOpinionsString.append("\t\t\t\t}");
-//                            upgradeOpinionsString.append("\t\t\t\tmultiply = ").append(opinionMultiplier);
-//                            upgradeOpinionsString.append("\t\t\t}");
-//                            upgradeOpinionsString.append("\t\t\telse = {");
-//                            upgradeOpinionsString.append("\t\t\t\tmultiply = ").append(opinionMultiplierNeg);
-//                            upgradeOpinionsString.append("\t\t\t}");
-//                        }
-//                    }
                     line = line.replaceAll("<X:OPINIONS_UPGRADE>", GenerateOpinionsString(lawOption, 1));
                 }
                 if (line.contains("<X:OPINIONS_DOWNGRADE>")){
@@ -111,8 +95,6 @@ public class LawOptionReplacer {
                         }
                     }
                 }
-
-                //TODO: REPLACE OPINION VALUES IN VOTING OPINION FILE
                 else {
                     line = line + "\n";
                     result.add(line);
@@ -124,31 +106,6 @@ public class LawOptionReplacer {
             System.out.println("NO FILE FOUND");
         }
         return new Vector<>();
-    }
-
-    /**
-     * Exactly what it says on the tin - we write the lines to the desired LawOption's folder in the output directory.
-     * @param lines The contents of the file created
-     * @param filename Name of the file created
-     * @param optionName Name of the sub-folder in which the file will be saved
-     */
-    public static void WriteToFile(Vector<String> lines, String filename, String optionName){
-        String directory = "OUTPUT/OPTIONS/" + optionName;
-        File dirFile = new File(directory);
-        if (!dirFile.exists()){
-            boolean created = dirFile.mkdirs();
-            if (!created){
-                return;
-            }
-        }
-        String outputPath = directory + "/"  + filename;
-        try(FileWriter fw = new FileWriter(outputPath);){
-            for (String line: lines) {
-                fw.write(line);
-            }
-        } catch (IOException e){
-            System.out.println("ERROR WRITING TO FILE");
-        }
     }
 
     /**
@@ -164,7 +121,7 @@ public class LawOptionReplacer {
             Resource[] templates = resolver.getResources("templates/LawOption/*.txt");
             for (Resource template: templates){
                 Vector<String> lines = GenerateFile(lawOption, template.getFile());
-                WriteToFile(lines, template.getFilename(), lawOption.getParentLawGroup().getSignature() + "/" + lawOption.getSignature());
+                WriteToFile(lines, template.getFilename(), "OPTIONS/" + lawOption.getParentLawGroup().getSignature() + "/" + lawOption.getSignature());
             }
         } catch (IOException e){
             System.out.println("ERROR READING PATTERN FILES");

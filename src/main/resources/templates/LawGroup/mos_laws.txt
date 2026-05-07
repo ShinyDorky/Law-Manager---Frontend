@@ -1,0 +1,6 @@
+# <X:name>
+MOS_laws_<X:signature> = {
+	flag = <X:lawType>
+	cumulative = no
+ <X:lawOptions>
+}
