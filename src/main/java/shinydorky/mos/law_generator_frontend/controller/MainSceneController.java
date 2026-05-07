@@ -45,7 +45,11 @@ public class MainSceneController {
     @FXML
     private TextField nameText;
     @FXML
+    private VBox nameArea;
+    @FXML
     private TextField signatureText;
+    @FXML
+    private VBox signatureArea;
     @FXML
     private TextArea descriptionText;
     @FXML
@@ -106,6 +110,8 @@ public class MainSceneController {
 
         treeView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue == null){
+                nameArea.setVisible(false);
+                signatureArea.setVisible(false);
                 descriptionArea.setVisible(false);
                 optionAttributes1.setVisible(false);
                 optionAttributes2.setVisible(false);
@@ -119,9 +125,13 @@ public class MainSceneController {
                 DisplayChosenItem(newValue.getValue());
                 deleteButton.setVisible(true);
                 saveButton.setVisible(true);
-                generateFilesButton.setVisible(true);
                 addButton.setVisible(false);
 
+                if (newValue.getValue().getItemDepth() == 0){
+                    generateFilesButton.setVisible(false);
+                } else {
+                    generateFilesButton.setVisible(true);
+                }
 
                 if (newValue.getValue().getItemDepth() != 2){
                     addChildButton.setVisible(true);
@@ -171,17 +181,23 @@ public class MainSceneController {
                 TreeItem<LawType> lawTypeItem = new TreeItem<>(type);
                 root.getChildren().add(lawTypeItem);
 
+                lawTypeItem.setExpanded(true);
+
                 ArrayList<LawGroup> groups = RESTConnector.GetGroupsInType(type);
                 for(LawGroup group: groups){
                     group.setItemDepth(1);
                     TreeItem<LawType> lawGroupItem = new TreeItem<>(group);
                     lawTypeItem.getChildren().add(lawGroupItem);
 
+                    lawGroupItem.setExpanded(true);
+
                     ArrayList<LawOption> options = RESTConnector.GetOptionsInGroup(group);
                     for(LawOption option: options){
                         option.setItemDepth(2);
                         TreeItem<LawType> lawOptionItem = new TreeItem<>(option);
                         lawGroupItem.getChildren().add(lawOptionItem);
+
+                        lawOptionItem.setExpanded(true);
                     }
                 }
             }
@@ -191,6 +207,8 @@ public class MainSceneController {
     }
 
     private void DisplayChosenItem(LawType selectedItem){
+        nameArea.setVisible(true);
+        signatureArea.setVisible(true);
         nameText.setText(selectedItem.getName());
         signatureText.setText(selectedItem.getSignature());
         if (selectedItem.getClass() == LawType.class){
@@ -253,6 +271,8 @@ public class MainSceneController {
      */
     @FXML
     public void SetupCreation(){
+        nameArea.setVisible(true);
+        signatureArea.setVisible(true);
         deleteButton.setVisible(false);
         saveButton.setVisible(false);
         addChildButton.setVisible(false);
@@ -380,6 +400,12 @@ public class MainSceneController {
             );
         }
         else if (treeView.getSelectionModel().getSelectedItem().getValue().getItemDepth() == 1){
+            if (Objects.equals(statePowerOpinion.getText(), "")) statePowerOpinion.setText("0");
+            if (Objects.equals(militaryOpinion.getText(), "")) militaryOpinion.setText("0");
+            if (Objects.equals(religiousUnityOpinion.getText(), "")) religiousUnityOpinion.setText("0");
+            if (Objects.equals(culturalToleranceOpinion.getText(), "")) culturalToleranceOpinion.setText("0");
+            if (Objects.equals(populismOpinion.getText(), "")) populismOpinion.setText("0");
+            if (Objects.equals(placeInOrderText.getText(), "")) placeInOrderText.setText("0");
             RESTConnector.createNewLawOption(LawOptionDto.builder()
                     .name(nameText.getText())
                     .signature(signatureText.getText())
@@ -418,9 +444,13 @@ public class MainSceneController {
 
     @FXML
     public void RefreshView() {
+        int selectionIndex = treeView.getSelectionModel().getSelectedIndex();
+        System.out.println(selectionIndex);
         SetupTreeView();
         treeView.getSelectionModel().clearSelection();
         ClearFields();
+
+        treeView.getSelectionModel().select(selectionIndex);
     }
 
     private void ClearFields(){

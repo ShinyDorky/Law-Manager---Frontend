@@ -33,25 +33,25 @@
                                              <children>
                                                 <VBox minHeight="-Infinity" prefHeight="721.0" prefWidth="300.0" spacing="5.0" HBox.hgrow="ALWAYS">
                                                    <children>
-                                                      <VBox prefHeight="53.0" prefWidth="161.0">
+                                                      <VBox fx:id="nameArea" prefHeight="53.0" prefWidth="161.0" visible="false">
                                                          <children>
                                                             <Label text="Name" />
                                                             <TextField fx:id="nameText" text="TMP" />
                                                          </children>
                                                       </VBox>
-                                                      <VBox prefHeight="53.0" prefWidth="161.0">
+                                                      <VBox fx:id="signatureArea" prefHeight="53.0" prefWidth="161.0" visible="false">
                                                          <children>
                                                             <Label text="Code signature" />
                                                             <TextField fx:id="signatureText" text="TMP" />
                                                          </children>
                                                       </VBox>
-                                                      <VBox fx:id="descriptionArea" layoutX="10.0" layoutY="63.0" prefHeight="200.0" prefWidth="448.0">
+                                                      <VBox fx:id="descriptionArea" layoutX="10.0" layoutY="63.0" prefHeight="200.0" prefWidth="448.0" visible="false">
                                                                <children>
                                                             <Label text="Description" />
                                                             <TextArea fx:id="descriptionText" prefHeight="500.0" prefWidth="448.0" />
                                                          </children>
                                                       </VBox>
-                                                      <VBox fx:id="optionAttributes1" prefHeight="395.0" prefWidth="923.0" VBox.vgrow="ALWAYS">
+                                                      <VBox fx:id="optionAttributes1" prefHeight="395.0" prefWidth="923.0" visible="false" VBox.vgrow="ALWAYS">
                                                          <children>
                                                             <GridPane hgap="5.0" prefHeight="123.0" prefWidth="923.0" vgap="5.0">
                                                               <columnConstraints>
@@ -112,7 +112,7 @@
                                                       </VBox>
                                                    </children>
                                                 </VBox>
-                                                <VBox fx:id="optionAttributes2" prefHeight="721.0" prefWidth="300.0" HBox.hgrow="ALWAYS">
+                                                <VBox fx:id="optionAttributes2" prefHeight="721.0" prefWidth="300.0" visible="false" HBox.hgrow="ALWAYS">
                                                    <children>
                                                       <VBox prefHeight="165.0" prefWidth="923.0">
                                                          <children>
@@ -146,10 +146,10 @@
                         </ScrollPane>
                         <HBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="200.0" spacing="10.0" VBox.vgrow="NEVER">
                            <children>
-                              <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#DeleteItem" prefHeight="45.0" prefWidth="185.0" text="Delete" HBox.hgrow="ALWAYS" />
-                              <Button fx:id="saveButton" mnemonicParsing="false" onAction="#SaveItem" prefHeight="45.0" prefWidth="185.0" text="Save" HBox.hgrow="ALWAYS" />
-                              <Button fx:id="generateFilesButton" layoutX="400.0" layoutY="10.0" mnemonicParsing="false" onAction="#GenerateFiles" prefHeight="45.0" prefWidth="185.0" text="Generate Files" />
-                              <Button fx:id="addChildButton" layoutX="205.0" layoutY="10.0" mnemonicParsing="false" onAction="#SetupCreation" prefHeight="45.0" prefWidth="185.0" text="Add Child" />
+                              <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#DeleteItem" prefHeight="45.0" prefWidth="185.0" text="Delete" visible="false" HBox.hgrow="ALWAYS" />
+                              <Button fx:id="saveButton" mnemonicParsing="false" onAction="#SaveItem" prefHeight="45.0" prefWidth="185.0" text="Save" visible="false" HBox.hgrow="ALWAYS" />
+                              <Button fx:id="generateFilesButton" layoutX="400.0" layoutY="10.0" mnemonicParsing="false" onAction="#GenerateFiles" prefHeight="45.0" prefWidth="185.0" text="Generate Files" visible="false" />
+                              <Button fx:id="addChildButton" layoutX="205.0" layoutY="10.0" mnemonicParsing="false" onAction="#SetupCreation" prefHeight="45.0" prefWidth="185.0" text="Add Child" visible="false" />
                               <Button fx:id="addButton" layoutX="205.0" layoutY="10.0" mnemonicParsing="false" onAction="#AddNewItem" prefHeight="45.0" prefWidth="185.0" text="Add New Item" visible="false" />
                            </children>
                         </HBox>
