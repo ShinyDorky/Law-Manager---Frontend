@@ -146,15 +146,15 @@ public class LawOptionReplacer {
             float opinionMultiplierNeg = lawOption.getParentLawGroup().GetChangeOpinionNeg(
                     type, lawOption.getPlaceInOrder(), orderChange);
             if (opinionMultiplier != 0){
-                upgradeOpinionsString.append("\t\t\tif = {\n");
-                upgradeOpinionsString.append("\t\t\t\tlimit = {\n");
-                upgradeOpinionsString.append("\t\t\t\t\tvar:MOS_law_opinion_").append(type.toString().toLowerCase()).append(" > 0\n");
+                upgradeOpinionsString.append("\t\t\t\tif = {\n");
+                upgradeOpinionsString.append("\t\t\t\t\tlimit = {\n");
+                upgradeOpinionsString.append("\t\t\t\t\t\tvar:MOS_law_opinion_").append(type.toString().toLowerCase()).append(" > 0\n");
+                upgradeOpinionsString.append("\t\t\t\t\t}\n");
+                upgradeOpinionsString.append("\t\t\t\t\tmultiply = ").append(opinionMultiplier).append("\n");
                 upgradeOpinionsString.append("\t\t\t\t}\n");
-                upgradeOpinionsString.append("\t\t\t\tmultiply = ").append(opinionMultiplier).append("\n");
-                upgradeOpinionsString.append("\t\t\t}\n");
-                upgradeOpinionsString.append("\t\t\telse = {\n");
-                upgradeOpinionsString.append("\t\t\t\tmultiply = ").append(opinionMultiplierNeg).append("\n");
-                upgradeOpinionsString.append("\t\t\t}\n\n");
+                upgradeOpinionsString.append("\t\t\t\telse = {\n");
+                upgradeOpinionsString.append("\t\t\t\t\tmultiply = ").append(opinionMultiplierNeg).append("\n");
+                upgradeOpinionsString.append("\t\t\t\t}\n\n");
             }
         }
 //        line = line.replaceAll("<X:effects>", lawOption.getEffects());

@@ -72,7 +72,8 @@ public class LawGroup extends LawType{
      * @return A floating point multiplier for the Voting Opinion of the MOS Voter Character
      */
     public float GetChangeOpinionNeg(LawOptionOpinionType opinionType, int targetPlaceInOrder, int orderChange){
-        return GetChangeOpinionPos(opinionType, Math.abs(GetMaxOrderValue() - targetPlaceInOrder), orderChange * (-1));
+        int distFromStart = targetPlaceInOrder - GetMinOrderValue();
+        return GetChangeOpinionPos(opinionType, Math.abs(GetMaxOrderValue() - distFromStart), orderChange * (-1)) * (-1);
     }
 
     /**
@@ -83,6 +84,17 @@ public class LawGroup extends LawType{
         int result = 0;
         for (LawOption lawOption: childOptions){
             result = Math.max(result, lawOption.getPlaceInOrder());
+        }
+        return result;
+    }
+    /**
+     *
+     * @return The lowest value of the PlaceInOrder among the children of this LawGroup
+     */
+    public int GetMinOrderValue(){
+        int result = 1000;
+        for (LawOption lawOption: childOptions){
+            result = Math.min(result, lawOption.getPlaceInOrder());
         }
         return result;
     }
