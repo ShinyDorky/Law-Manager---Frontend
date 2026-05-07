@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Scanner;
 import java.util.Vector;
 
@@ -116,15 +117,11 @@ public class LawOptionReplacer {
      */
     public static void WriteAllFiles(LawOption lawOption){
         LOGGER.info("GENERATING FILES FOR: " + lawOption.getParentLawGroup().getSignature() + "_" + lawOption.getSignature());
-        try {
-            PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-            Resource[] templates = resolver.getResources("templates/LawOption/*.txt");
-            for (Resource template: templates){
-                Vector<String> lines = GenerateFile(lawOption, template.getFile());
-                WriteToFile(lines, template.getFilename(), "OPTIONS/" + lawOption.getParentLawGroup().getSignature() + "/" + lawOption.getSignature());
-            }
-        } catch (IOException e){
-            System.out.println("ERROR READING PATTERN FILES");
+        File templatesFolder = new File("templates/LawOption");
+
+        for (File file : Objects.requireNonNull(templatesFolder.listFiles())) {
+            Vector<String> lines = GenerateFile(lawOption, file);
+            WriteToFile(lines, file.getName(), "OPTIONS/" + lawOption.getSignature());
         }
     }
 
