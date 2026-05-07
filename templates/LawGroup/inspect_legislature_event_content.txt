@@ -1,0 +1,4 @@
+
+		first_valid = { # MOS_laws_<X:signature>
+<X:lawOptions>
+		}

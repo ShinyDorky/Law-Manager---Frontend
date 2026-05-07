@@ -1,3 +1,3 @@
  # <X:signature>
-
+ MOS_laws_<X:signature>: "<X:name>"
  <X:lawOptions>

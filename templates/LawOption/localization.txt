@@ -1,3 +1,3 @@
  # <X:signature>
- <X:group>_<X:signature>: "<X:name>"
- <X:group>_<X:signature>_effects: "<X:desc>"
+ MOS_laws_<X:group>_<X:signature>: "<X:name>"
+ MOS_laws_<X:group>_<X:signature>_effects: "<X:desc>"

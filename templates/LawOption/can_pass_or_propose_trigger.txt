@@ -1,10 +1,25 @@
 # <X:signature>
 MOS_can_pass_or_propose_<X:group>_<X:signature>_trigger = {
     <X:can_pass>
-    OR = {
-        has_realm_law = MOS_laws_<X:group>_<X:neighbours>
-    }
+	custom_tooltip = {
+		text = MOS_NOT_ADJACENT_LAW_TT
+		OR = {
+			 has_realm_law = MOS_laws_<X:group>_<X:neighbours>
+		}
+	}
 }
 MOS_can_keep_<X:group>_<X:signature>_trigger = {
-    <X:can_keep>
+	trigger_if = {
+		limit = {
+			MOS_this_is_legislature_owner = yes
+		}
+<X:can_keep>
+	}
+	trigger_else = {
+		any_liege_or_above = {
+			MOS_i_am_legislature_owner_of = { POTENTIAL_UNDERLING = prev }
+<X:can_keep>
+		}
+	}
+    
 }

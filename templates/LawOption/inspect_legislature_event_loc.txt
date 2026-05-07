@@ -1,0 +1,1 @@
+ MOS_legislature_events.9000.MOS_laws_<X:group>_<X:signature>: "\n$EFFECT_LIST_BULLET$ #bold <X:group> :#! [GetLaw('MOS_laws_<X:group>_<X:signature>').GetName]"

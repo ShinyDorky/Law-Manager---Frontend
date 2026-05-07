@@ -1,0 +1,4 @@
+			triggered_desc = {
+				trigger = { scope:recipient = { has_realm_law = MOS_laws_<X:group>_<X:signature> } }
+				desc = MOS_legislature_events.9000.MOS_laws_<X:group>_<X:signature>
+			}

@@ -1,7 +1,7 @@
     # <X:signature>
     else_if = {
         limit = {
-            has_variable = MOS_start_law_vote_<X:group>
+            has_variable = MOS_start_law_vote_<X:signature>
         }
 <X:lawOptions>
     }
