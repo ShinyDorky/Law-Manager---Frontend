@@ -70,7 +70,7 @@ public class LawOptionReplacer {
                     for (LawOption neighbour: lawOption.getParentLawGroup().getChildOptions()){
                         if (LawOption.AreNeighbours(lawOption, neighbour)){
                             String lineCopy = line;
-                            lineCopy = lineCopy.replaceAll("<X:neighbours>", neighbour.getName());
+                            lineCopy = lineCopy.replaceAll("<X:neighbours>", neighbour.getSignature());
                             lineCopy = lineCopy + "\n";
                             result.add(lineCopy);
                         }
@@ -80,7 +80,7 @@ public class LawOptionReplacer {
                     for (LawOption neighbour: lawOption.getParentLawGroup().getChildOptions()){
                         if (neighbour.getPlaceInOrder() == lawOption.getPlaceInOrder() - 1){
                             String lineCopy = line;
-                            lineCopy = lineCopy.replaceAll("<X:neighbours-1>", neighbour.getName());
+                            lineCopy = lineCopy.replaceAll("<X:neighbours-1>", neighbour.getSignature());
                             lineCopy = lineCopy + "\n";
                             result.add(lineCopy);
                         }
@@ -90,7 +90,7 @@ public class LawOptionReplacer {
                     for (LawOption neighbour: lawOption.getParentLawGroup().getChildOptions()){
                         if (neighbour.getPlaceInOrder() == lawOption.getPlaceInOrder() + 1){
                             String lineCopy = line;
-                            lineCopy = lineCopy.replaceAll("<X:neighbours+1>", neighbour.getName());
+                            lineCopy = lineCopy.replaceAll("<X:neighbours+1>", neighbour.getSignature());
                             lineCopy = lineCopy + "\n";
                             result.add(lineCopy);
                         }
