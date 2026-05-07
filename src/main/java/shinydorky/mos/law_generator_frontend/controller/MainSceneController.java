@@ -1,6 +1,7 @@
 package shinydorky.mos.law_generator_frontend.controller;
 
 import javafx.beans.value.ChangeListener;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.ScrollPane;
@@ -22,8 +23,7 @@ import shinydorky.mos.law_generator_frontend.replacer.LawGroupReplacer;
 import shinydorky.mos.law_generator_frontend.replacer.LawOptionReplacer;
 import shinydorky.mos.law_generator_frontend.rest.RESTConnector;
 
-import java.util.ArrayList;
-import java.util.Objects;
+import java.util.*;
 
 @Component
 @RequiredArgsConstructor
@@ -181,7 +181,7 @@ public class MainSceneController {
                 TreeItem<LawType> lawTypeItem = new TreeItem<>(type);
                 root.getChildren().add(lawTypeItem);
 
-                lawTypeItem.setExpanded(true);
+//                lawTypeItem.setExpanded(true);
 
                 ArrayList<LawGroup> groups = RESTConnector.GetGroupsInType(type);
                 for(LawGroup group: groups){
@@ -189,7 +189,7 @@ public class MainSceneController {
                     TreeItem<LawType> lawGroupItem = new TreeItem<>(group);
                     lawTypeItem.getChildren().add(lawGroupItem);
 
-                    lawGroupItem.setExpanded(true);
+//                    lawGroupItem.setExpanded(true);
 
                     ArrayList<LawOption> options = RESTConnector.GetOptionsInGroup(group);
                     for(LawOption option: options){
@@ -197,7 +197,7 @@ public class MainSceneController {
                         TreeItem<LawType> lawOptionItem = new TreeItem<>(option);
                         lawGroupItem.getChildren().add(lawOptionItem);
 
-                        lawOptionItem.setExpanded(true);
+//                        lawOptionItem.setExpanded(true);
                     }
                 }
             }
@@ -444,13 +444,43 @@ public class MainSceneController {
 
     @FXML
     public void RefreshView() {
-        int selectionIndex = treeView.getSelectionModel().getSelectedIndex();
-        System.out.println(selectionIndex);
-        SetupTreeView();
-        treeView.getSelectionModel().clearSelection();
-        ClearFields();
+        Stack<Long> itemsToExpand = new Stack<>();
 
-        treeView.getSelectionModel().select(selectionIndex);
+        TreeItem<LawType> selectedItem = treeView.getSelectionModel().getSelectedItem();
+        while (selectedItem != null &&selectedItem.getValue() != null){
+            itemsToExpand.push(selectedItem.getValue().getId());
+            selectedItem = selectedItem.getParent();
+        }
+
+        if (!itemsToExpand.isEmpty()){
+            int selectionIndex = 0;
+            SetupTreeView();
+            treeView.getSelectionModel().clearSelection();
+            ClearFields();
+
+            ObservableList<TreeItem<LawType>> children = treeView.getRoot().getChildren();
+            TreeItem<LawType> toExpand = null;
+            Long seekingId = itemsToExpand.pop();
+            for (TreeItem<LawType> typeTreeItem : children){
+                if (Objects.equals(typeTreeItem.getValue().getId(), seekingId)){
+                    toExpand = typeTreeItem;
+                    selectionIndex = treeView.getRow(typeTreeItem);
+                }
+            }
+            while (toExpand != null && !itemsToExpand.isEmpty()){
+                toExpand.setExpanded(true);
+                seekingId = itemsToExpand.pop();
+                ObservableList<TreeItem<LawType>> toExpandCandidates = toExpand.getChildren();
+                toExpand = null;
+                for (TreeItem<LawType> candidate: toExpandCandidates){
+                    if (Objects.equals(candidate.getValue().getId(), seekingId)){
+                        toExpand = candidate;
+                        selectionIndex = treeView.getRow(candidate);
+                    }
+                }
+            }
+            treeView.getSelectionModel().select(selectionIndex);
+        }
     }
 
     private void ClearFields(){
