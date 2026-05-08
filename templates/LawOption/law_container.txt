@@ -1,5 +1,4 @@
-                    # <X:group>_<X:signature>
-					button_mos_law_button_voting = {
+					button_mos_law_button_voting = { # <X:group>_<X:signature>
 						visible = "[EqualTo_string(Law.GetNameNoTooltip, Localize('MOS_laws_<X:group>_<X:signature>'))]"
 						blockoverride "passed_law"
 						{

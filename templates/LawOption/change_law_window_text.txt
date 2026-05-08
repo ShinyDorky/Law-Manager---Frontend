@@ -1,5 +1,4 @@
-            # <X:signature>
-            text_single = {
+            text_single = { # <X:signature>
 				layoutpolicy_horizontal = expanding
 				visible = "[GetScriptedGui('MOS_start_law_vote_gui_<X:group>_<X:signature>').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				text = "[GetLaw('MOS_laws_<X:group>_<X:signature>').GetName]"

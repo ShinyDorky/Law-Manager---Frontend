@@ -1,5 +1,4 @@
-        # <X:signature>
-        else_if = {
+        else_if = { # <X:signature>
 		    limit = {has_variable = MOS_start_law_vote_<X:group>_<X:signature> }
 		    add_realm_law = MOS_laws_<X:group>_<X:signature>
 	    }

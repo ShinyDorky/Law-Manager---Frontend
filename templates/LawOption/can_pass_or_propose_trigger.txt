@@ -1,5 +1,4 @@
-# <X:signature>
-MOS_can_pass_or_propose_<X:group>_<X:signature>_trigger = {
+MOS_can_pass_or_propose_<X:group>_<X:signature>_trigger = { # <X:signature>
     <X:can_pass>
 	custom_tooltip = {
 		text = MOS_NOT_ADJACENT_LAW_TT

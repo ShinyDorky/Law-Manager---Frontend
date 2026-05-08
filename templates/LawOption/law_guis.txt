@@ -1,5 +1,4 @@
-# <X:signature>
-MOS_start_law_vote_gui_<X:group>_<X:signature> = {
+MOS_start_law_vote_gui_<X:group>_<X:signature> = { # <X:signature>
 	effect = {
 		MOS_clear_prepared_laws_effect = yes
 		set_variable = MOS_start_law_vote_<X:group>_<X:signature>

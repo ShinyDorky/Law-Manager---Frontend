@@ -1,6 +1,6 @@
-# <X:signature>
-MOS_can_start_law_vote_gui_<X:group>_<X:signature> = {
+MOS_can_start_law_vote_gui_<X:group>_<X:signature> = { # <X:signature>
 	is_shown = {
 		MOS_can_pass_or_propose_<X:group>_<X:signature>_trigger = yes
+		MOS_can_keep_<X:group>_<X:signature>_trigger = yes
 	}
 }
