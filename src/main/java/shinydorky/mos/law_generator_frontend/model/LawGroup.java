@@ -60,6 +60,13 @@ public class LawGroup extends LawType{
                 break;
             }
         }
+//        if (newOpinion != 0 && previousOpinion != 0){
+//            System.out.println(
+//                    opinionType +
+//                            " FROM " + (targetPlaceInOrder - orderChange) +
+//                            " TO " + targetPlaceInOrder + ": " +
+//                            ((float) (newOpinion - previousOpinion)) / 100);
+//        }
         return ((float) (newOpinion - previousOpinion)) / 100;
     }
 
