@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.springframework.context.annotation.Bean;
 import shinydorky.mos.law_generator_frontend.controller.MainSceneController;
+import shinydorky.mos.law_generator_frontend.generator.FileGenerator;
 
 public class Frontend extends Application {
     public static void main(String[] args) {
@@ -39,8 +40,7 @@ public class Frontend extends Application {
         primaryStage.setMinWidth(900);
 
         controller.initialize(primaryStage);
-
-
+        FileGenerator.CreateTemplateDirIfMissing();
 
         System.out.println("start end: " + Thread.currentThread().getName());
     }
