@@ -30,4 +30,12 @@ public class FileGenerator {
             System.out.println("ERROR WRITING TO FILE");
         }
     }
+
+    public static void CreateTemplateDirIfMissing(){
+        String directory = "templates";
+        File dirFile = new File(directory);
+        if (!dirFile.exists()){
+            dirFile.mkdirs();
+        }
+    }
 }
