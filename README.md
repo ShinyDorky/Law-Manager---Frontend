@@ -1,4 +1,4 @@
-# MOS Law Generator - frontend
+# MOS Law Manager - frontend
 A SpringBoot/JavaFX meant to work alongside a
 [REST API](https://github.com/ShinyDorky/law_generator_backend)
 in order to help me with creating and managing laws in my CK3 mod.
