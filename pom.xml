@@ -62,10 +62,43 @@
 			<artifactId>javafx-fxml</artifactId>
 			<version>22</version>
 		</dependency>
+
+
+		<dependency>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-shade-plugin</artifactId>
+			<version>3.6.2</version>
+			<scope>compile</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>shade-jar-with-dependencies</id>
+						<phase>package</phase>
+						<goals>
+							<goal>
+								shade
+							</goal>
+						</goals>
+						<configuration>
+							<finalName>Law Generator - Frontend</finalName>
+							<shadedArtifactAttached>true</shadedArtifactAttached>
+							<transformers>
+								<transformer implementation=
+													 "org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+									<mainClass>shinydorky.mos.law_generator_frontend.LawGeneratorFrontendApplication</mainClass>
+								</transformer>
+							</transformers>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>

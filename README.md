@@ -86,14 +86,13 @@ as the one currently generated is inserted with appropriate values
 Name and signature fields are mandatory in every type of entity.
 
 ## Usage
-Use ``mvn clean package`` to generate a .jar file. You can run it by opening a cmd in the file's location and running
-the following command:
+Use ``mvn clean package`` to generate a .jar file. In the target folder a .jar file named `Law Generator - Frontend`
+will be created.
 
-``javaw -jar .\[FILE_NAME].jar``
+You can run it by double-clicking it as long as you have Java on your machine.
 
 Alternatively you can download both files in a 
-[release package](https://github.com/ShinyDorky/law_generator_frontend/releases/tag/1.0.0) 
-and use an included .bat file.
+[release package](https://github.com/ShinyDorky/law_generator_frontend/releases/tag/1.0.0).
 
 ## Requirements
 As long as you have Java installed, it should run.
